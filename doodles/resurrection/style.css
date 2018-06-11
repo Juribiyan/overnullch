@@ -1,0 +1,137 @@
+html {
+  background-color: black;
+  color: #666;
+}
+.balls {
+  background: url(dim.png);
+  background-size: 100%;
+  display: inline-block;
+}
+.volume-indicator {
+  stroke-dasharray: 70000;
+}
+.volume-off {
+  opacity: 0
+}
+.volume-off, .volume-indicator {
+  -webkit-transition: stroke-dashoffset 0.5s, opacity 0.5s;
+  -o-transition: stroke-dashoffset 0.5s, opacity 0.5s;
+  transition: stroke-dashoffset 0.5s, opacity 0.5s;
+}
+.reveal-on-play {
+  -webkit-transition: opacity 0.7s;
+  -o-transition: opacity 0.7s;
+  transition: opacity 0.7s;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100px;
+  background: transparent
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  height: 10px;
+  cursor: pointer;
+  border-bottom: 2px solid #666;
+  background: transparent;
+}
+input[type=range]:hover::-webkit-slider-runnable-track {
+  border-color: white;
+}
+input[type=range]::-webkit-slider-thumb {
+  height: 10px;
+  width: 2px;
+  background: #666;
+  cursor: pointer;
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 0;
+}
+
+input[type=range]::-moz-range-track {
+  height: 10px;
+  cursor: pointer;
+  border-bottom: 2px solid #666;
+  background: transparent;
+}
+input[type=range]:hover::-moz-range-track {
+  border-color: white;
+}
+input[type=range]::-moz-range-thumb {
+  height: 10px;
+  width: 2px;
+  background: #666;
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+}
+
+input[type=range]::-ms-track {
+  height: 10px;
+  cursor: pointer;
+  border-bottom: 2px solid #666;
+  background: transparent;
+}
+input[type=range]:hover::-ms-track {
+  border-color: white;
+}
+input[type=range]::-ms-thumb {
+  height: 10px;
+  width: 2px;
+  background: #666;
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+}
+audio {
+  display: none;
+}
+.rop {
+  vertical-align: middle;
+}
+.control-btn {
+  cursor: pointer;
+  -webkit-transition: fill 0.3s;
+  -o-transition: fill 0.3s;
+  transition: fill 0.3s;
+}
+.control-btn:hover {
+  color: white;
+}
+.nosmil-pause, .nosmil-play {
+  -webkit-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+.control-btn, input {
+  -webkit-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  transition: color 0.3s;
+}
+input {
+  -webkit-transition: border-color 0.3s;
+  -o-transition: border-color 0.3s;
+  transition: border-color 0.3s;
+}
+
+#playlist {
+  display: inline-block;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.pl-element {
+  margin-bottom: 5px;
+  cursor: pointer;
+  -webkit-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  transition: color 0.3s;
+}
+.current.pl-element {
+  color: #48F6FF;
+}
+.pl-element:hover {
+  color: white;
+}

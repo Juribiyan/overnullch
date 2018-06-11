@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/css/over-index.css?v=4.1">
+	<link rel="stylesheet" href="style.css">
+	<script> 
+	  document.write('<script src="playlist-nocache.js?v='+Math.random()+'"></'+'script>') 
+	</script>
+	<script src="script.js"></script>
+	<title>POWERNULLCH</title>
+</head>
+<body>
+	<div id="centered">
+		<div class="balls">
+			<img src="lit.png" id="animatee">
+		</div>
+		<audio>
+			<source id="ogg-src" src="tracks/resurrection.ogg" type="audio/ogg">
+		  <source id="mp3-src" src="tracks/resurrection.mp3" type="audio/mpeg">
+		</audio>
+		<div id="player">
+			<svg class="control-btn" id="playpause" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="32px" height="32px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd; fill: currentColor" viewBox="0 0 38468 38468" xmlns:xlink="http://www.w3.org/1999/xlink">
+			  <polygon class="pp-el nosmil-play" points="0,0 0,38468 18634,29154 18634,9317 ">
+			    <animate id="pause-to-play-1" begin="indefinite" attributeName="points" dur="200ms" to="0,0 0,38468 18634,29154 18634,9317 " fill="freeze"/>
+			    <animate id="play-to-pause-1" begin="indefinite" attributeName="points" dur="200ms" to="0,0 0,36572 13714,36572 13714,0 " fill="freeze"/>
+			  </polygon>
+			  <polygon class="pp-el nosmil-play" points="17430,29753 38468,19236 38468,19236 17430,8715 ">
+			    <animate id="pause-to-play-2" begin="indefinite" attributeName="points" dur="200ms" to="17430,29753 38468,19236 38468,19236 17430,8715 " fill="freeze"/>
+			    <animate id="play-to-pause-2" begin="indefinite" attributeName="points" dur="200ms" to="20571,36572 34286,36572 34286,0 20571,0 " fill="freeze"/>
+			  </polygon>
+			  <polygon class="nosmil-pause" style="opacity:0" class="pp-el" points="0,0 0,36572 13714,36572 13714,0 " />
+			  <polygon class="nosmil-pause" style="opacity:0" class="pp-el" points="20571,36572 34286,36572 34286,0 20571,0 " />
+			</svg>
+			<div class="reveal-on-play" style="opacity: 0">
+				<input class="rop" type="range" id="song-position" min="0" max="1" value="0" step="0.01">
+				<svg class="rop control-btn" id="volume-icon" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="24px" height="17px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 24617 17255" xmlns:xlink="http://www.w3.org/1999/xlink">
+					<defs>
+				  <style type="text/css">
+				   <![CDATA[
+				    .volume-indicator {stroke:currentColor;stroke-width:1024.83;fill:none;}
+				    .fil1 {fill:currentColor}
+				   ]]>
+				  </style>
+					</defs>
+					<g id="Слой_x0020_1">
+					 <metadata id="CorelCorpID_0Corel-Layer"/>
+					 <path class="fil0 volume-indicator" d="M13162 12452c1108,-884 1754,-2224 1754,-3643 0,-1321 -562,-2582 -1546,-3466l2602 -1683c1273,1412 1978,3247 1978,5149 0,1949 -740,3826 	-2069,5249l2748 1526c1551,-1916 2398,-4308 2398,-6775 0,-2413 -810,-4756 -2301,-6654l2730 -1490c1721,2367 2648,5219 2648,8144 0,2926 -927,5777 -2648,8144"/>
+					 <polygon class="fil1" points="0,11886 5128,11886 11283,15989 11282,1631 5128,5732 0,5732 "/>
+					 <polygon class="fil1 volume-off" points="13985,4707 17437,8159 20888,4707 21540,4707 21540,5357 18087,8809 21540,12263 21540,12912 20888,12912 17437,9460 13985,12912 13334,12912 	13334,12263 16786,8809 13334,5357 13334,4707 "/>
+					</g>
+				</svg>
+				<input class="rop" type="range" id="volume-input" min="0" max="1" value="0" step="0.01">
+				<br>
+				<div id="playlist"></div>
+			</div>
+		</div><br>
+		<!-- <canvas></canvas> -->
+	</div>
+	<script>go()</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="shortcut icon" href="favicon.ico">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+	<noscript>
+	  <meta http-equiv="refresh" content="0;url=http://natribu.org/">
+	</noscript>
+	<title>Овернульч</title>
+	<link rel="apple-touch-icon-precomposed" sizes="57x57" href="/fav/apple-touch-icon-57x57.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/fav/apple-touch-icon-114x114.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/fav/apple-touch-icon-72x72.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/fav/apple-touch-icon-144x144.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/fav/apple-touch-icon-120x120.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/fav/apple-touch-icon-152x152.png" />
+	<link rel="icon" type="image/png" href="/fav/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="image/png" href="/fav/favicon-16x16.png" sizes="16x16" />
+	<meta name="application-name" content="Овернульч"/>
+	<meta name="msapplication-TileColor" content="#000000" />
+	<meta name="msapplication-TileImage" content="/fav/mstile-144x144.png" />
+	<link rel="stylesheet" href="css/carcass.css">
+	<script src="lib/javascript/jquery-1.11.1.min.js"></script>
+	<script src="lib/javascript/jquery.ba-hashchange.min.js"></script>
+	<script src="lib/javascript/carcass.js"></script>
+</head>
+	<body>
+		<iframe src="frame.html" name="list" scrolling="auto" id="list"></iframe>
+		<script>
+		if(location.hash) {
+			var go = location.hash.split(/#\/?/)[1].split(/\/$/)[0]
+			if (go == location.protocol + '//' + location.host)
+				go = '/index.html'
+			document.write('<iframe src="'+go+'" name="main" id="main" class="not-frame"></iframe>')
+		}
+		else if (location.search && location.search.split('?')[1]) {
+			var go = location.search.split('?')[1]
+			if (go) {
+				go = go.split('/')
+				if (go[0]=='catalog' && go[1])
+					localStorage['cat-tab'] = go[1]
+				document.write('<iframe src="/'+go[0]+'" name="main" id="main" class="not-frame"></iframe>')
+			}
+		}
+		else
+			document.write('<iframe src="/index.html" name="main" id="main" class="not-frame"></iframe>')
+		</script>
+		<iframe src="/live/overnullchlive.html" id="live" name="live" class="not-frame"></iframe>
+	</body>
+</html>

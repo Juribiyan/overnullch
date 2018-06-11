@@ -1,0 +1,103 @@
+body {
+	margin: 0;
+	font-size: 0;
+}
+iframe {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	border: none;
+	-webkit-transition-duration: 0.3s;
+	-o-transition-duration: 0.3s;
+	   transition-duration: 0.3s;
+}
+
+#list {
+	z-index: 1;
+	-webkit-transition-property: height, width, box-shadow;
+	-webkit-transition-property: height, width, -webkit-box-shadow;
+	-o-transition-property: height, width, box-shadow;
+	transition-property: height, width, box-shadow;
+}
+.l-v #list {
+	width: 228px;
+}
+.l-v .hidden#list {
+	width: 20px;
+}
+.l-v.l-olay #list:hover {
+	box-shadow: 2px 0 30px rgba(0, 0, 0, 0.58);
+}
+.l-h #list {
+	width: 100%;
+}
+.l-h .hidden#list {
+	height: 30px;
+}
+.l-h .hidden#list:hover {
+	box-shadow: 0 2px 30px rgba(0, 0, 0, 0.58);
+}
+
+#main {
+	height: 100%;
+	width: 100%;
+	border: none;
+	box-sizing: border-box;
+	z-index: 0;
+	-webkit-transition-property: padding-left;
+	-o-transition-property: padding-left;
+	transition-property: padding-left;
+	background: #fff;
+}
+.l-v.l-fix .not-frame {
+	padding-left: 228px;
+}
+.l-v.l-fix .hidden.not-frame, .l-v.l-shift .hidden.not-frame {
+	padding-left: 20px;
+}
+.l-v.l-olay .not-frame {
+	padding-left: 20px;
+}
+.l-h .not-frame {
+	padding-top: 30px;
+}
+.l-v.l-shift #main {
+	-webkit-transition: -webkit-transform 0.3s;
+	transition: -webkit-transform 0.3s;
+	-o-transition: -o-transform 0.3s;
+	transition: transform 0.3s;
+	transition: transform 0.3s, -webkit-transform 0.3s, -o-transform 0.3s;
+	-webkit-transform: translate(208px);
+	    -ms-transform: translate(208px);
+	     -o-transform: translate(208px);
+	        transform: translate(208px);
+	-webkit-transform: translate3d(208px,0,0);
+	        transform: translate3d(208px,0,0);
+	padding-left: 20px;
+	will-change: transform;
+}
+.l-v.l-shift .hidden#main {
+	-webkit-transform: none;
+	    -ms-transform: none;
+	        -o-transform: none;
+	   transform: none;
+}
+
+#live {
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+  height: 130px;
+  top: -130px;
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+}
+.l-h #live {
+	height: 160px;
+	top: -160px;
+}
+.shown#live {
+	top: 0;
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+	<title>Каталог борд</title>
+	<link rel="stylesheet" href="/css/roboto.css">
+	<link rel="stylesheet" href="catalog.css">
+	<script src="/lib/javascript/jquery-1.11.1.min.js"></script>
+	<script src="/lib/javascript/lodash.min.js"></script>
+	<script src="/lib/javascript/Sortable.min.js"></script>
+	<script src="/lib/javascript/es6-promise.auto.min.js"></script>
+	<script src="/lib/es5/catalog.js"></script>
+</head>
+<body class="list-collapsed">
+	<script src="/lib/javascript/svgsprites.js" url="catalog.svg"></script>
+	<div id="installed">
+		<header>
+			<button id="apply" onclick="reloadFrame()">
+				<svg class="icon"><use xlink:href="#i-turnleft"></use></svg>
+				<span>Применить</span>
+			</button>
+			<div id="drawer" class="cat-btn"><svg class="icon"><use xlink:href="#i-drawer"></use></svg></div>
+		</header>
+		<ul id="boardlist"></ul>
+	</div>
+	<div id="catalog" class="tab-default">
+		<div id="hijab"></div>
+		<header>
+			<div class="tabs">
+				<div class="tabs-wrap">
+					<svg class="icon i-down-chevron"><use xlink:href="#i-down-chevron"></use>
+					<div id="tab-default" class="tab tab-selected">Default</div>
+					<div id="tab-custom" class="tab">Custom</div>
+					<div id="tab-drafts" class="tab">Drafts</div>
+				</div>
+			</div>
+			<div id="cat-btngroup">
+				<a class="cat-btn" id="go-to-editor" href="/editor" title="Добавить сайт в Редакторе"><svg class="icon"><use xlink:href="#i-plus"></use></svg></a>
+				<div id="search-wrap">
+					<div class="cat-btn" id="toggle-search"><svg class="icon"><use xlink:href="#i-search"></use></svg></div>
+					<input type="text" id="search">
+					<div class="cat-btn" id="cancel-search"><svg class="icon"><use xlink:href="#i-x"></use></svg></div>
+				</div>
+			</div>
+		</header>
+		<div id="cc-wrap">
+			<div id="error-wrapper"></div>
+			<div id="catalog-contents">
+				<button class="pseudochan sect-drafts" id="import-draft">
+					<div class="import-msg">Импоритровать черновик...</div>
+				</button>
+			</div>
+		</div>
+	</div>
+	<input type="file" id="up-victim" style="display:none">
+	<script>$(main)</script>
+</body>
+</html>

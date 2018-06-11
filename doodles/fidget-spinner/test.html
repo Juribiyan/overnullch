@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="/doodles/fidget-spinner/style.css">
+  <script src="/../../lib/javascript/jquery-1.11.1.min.js"></script>
+  <script src="propeller.min.js"></script>
+</head>
+<body>
+  <div class="spinner-container">
+    <div class="spinner" id="spinner">
+      <div class="ball-container">
+        <img src="/chans/balls/default/0-chan.png">
+      </div>
+      <div class="ball-container">
+        <img src="/chans/balls/default/alterchan.png">
+      </div>
+      <div class="ball-container">
+        <img src="/chans/balls/default/0nyan.png">
+      </div>
+    </div>
+    <div class="ball-container bc-center">
+      <img src="/chans/balls/default/0chan.png">
+    </div>
+  </div>
+  <script>
+    $('#spinner').propeller({
+      inertia: 0.9993, 
+      speed: 0
+    });
+  </script>
+</body>
+</html>

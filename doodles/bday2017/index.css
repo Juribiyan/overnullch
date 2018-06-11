@@ -1,0 +1,16 @@
+html {
+  background-color: #2C333D;
+}
+body {
+  color: rgb(55, 201, 153);
+}
+.download-button, .download-button:visited {
+    background: rgb(70, 77, 88);
+}
+.download-button:hover {
+  background: rgb(87, 95, 109);
+}
+.download-button:active {
+    box-shadow: inset 0 6px 30px rgb(35, 38, 43);
+    color: #ADB2BB;
+}

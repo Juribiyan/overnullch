@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+	<title>Добавить ссылку!</title>
+  <link rel="stylesheet" href="/css/roboto.css">
+	<link rel="stylesheet" href="live.css">
+	<script src="/lib/javascript/jquery-1.11.1.min.js"></script>
+  <script src="/lib/es5/live.js"></script>
+</head>
+<body>
+  <script src="/lib/javascript/svgsprites.js" url="/css/icons/frame.svg"></script>
+  <form action="/live/api.php" method="post">
+    <div class="input-container">
+      <input name="url" type="text" id="url" pattern="^https?:\/\/(?:www\.)?((?:(?!www\.)[^\/\?#\.\s]+?\.)[^\/\?#\s]{2,})(\/[^\?#]+?)?\/?(?:(\?.+?))?(?:(#.+?))?$" maxlength="300" minlength="11" placeholder="URL" title="Ссылка" required>
+    </div>
+    <div class="input-container">
+      <input name="description" type="text" id="description" maxlength="70" minlength="3" placeholder="Описание" title="Описание" required>
+    </div>
+    <button type="submit">
+      <span class="bs-normal-action">Добавить ссылку</span>
+      <span class="bs-success">Ссылка добавлена!</span>
+    </button>
+    <div id="closer" title="Закрыть">
+      <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#i-delete"></use></svg>
+    </div>
+    <div id="error-wrapper">
+      <div id="errorbox">Ошибка</div>
+    </div>
+  </form>
+	<script>$(main)</script>
+</body>
+</html>

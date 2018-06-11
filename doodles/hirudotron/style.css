@@ -1,0 +1,70 @@
+html {
+  background: #000;
+}
+body {
+  color: #cccccc;
+}
+.spinner-container {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  max-width: 400px;
+  max-height: 400px;
+  margin-bottom: 30px;
+  margin-top: 10px;
+}
+#hirudotron {
+  width: 90%;
+  opacity: 0.9;
+}
+.spinner {
+  background: url(spinner.png);
+  background-repeat: no-repeat;
+  width: 480px;
+  height: 100%;
+  display: inline-block;
+  position: relative;
+}
+.ball-container {
+  height: 150px;
+  width: 150px;
+  text-align: center;
+  line-height: 150px;
+  -webkit-transform-origin: 75px 233px;
+      -ms-transform-origin: 75px 233px;
+       -o-transform-origin: 75px 233px;
+          transform-origin: 75px 233px;
+  display: inline-block;
+}
+.ball-container img {
+  vertical-align: middle;
+  display: inline-block;
+}
+.spinner .ball-container {
+  position: absolute;
+  left: 165px;
+  top: 16px;
+}
+#bc-2 {
+  -webkit-transform: rotate(120deg);
+      -ms-transform: rotate(120deg);
+       -o-transform: rotate(120deg);
+          transform: rotate(120deg);
+}
+#bc-3 {
+  -webkit-transform: rotate(240deg);
+      -ms-transform: rotate(240deg);
+       -o-transform: rotate(240deg);
+          transform: rotate(240deg);
+}
+.bc-center {
+  position: absolute;
+  top: 173px;
+  left: 172px;
+  pointer-events: none;
+}

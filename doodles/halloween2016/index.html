@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Овернульч</title>
+  <link rel="stylesheet" href="/css/roboto.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="/../../lib/javascript/jquery-1.11.1.min.js"></script>
+  <script src="script.es5.min.js"></script>
+</head>
+<body>
+  <div class="sky skylayer"></div>
+  <div class="stars skylayer"></div>
+  <div class="ceiling"></div>
+  <div class="floor"></div>
+  <div class="shadowrap">
+    <img src="sprites/shadows.png" class="shadows">
+  </div>
+  <div class="ballwrap">
+    <img class="ball">
+  </div>
+  <div class="sides">
+    <div class="side s-left"></div>
+    <div class="side s-right"></div>
+    <div class="framewrap">
+      <img class="frame" src="sprites/doorframe.png">
+    </div>
+  </div>
+  <div class="things-wrap">
+    <img src="sprites/things.png" alt="Овренульч" class="things">
+    <div class="bulb-container bc-one lit"><div class="bulb" style="left: 36px; top: 46px;"></div><div class="bulb" style="left: 93px; top: 27px;"></div><div class="bulb" style="left: 111px; top: 82px;"></div><div class="bulb" style="left: 152px; top: 83px;"></div><div class="bulb" style="left: 152px; top: 22px;"></div><div class="bulb" style="left: 187px; top: 45px;"></div><div class="bulb" style="left: 198px; top: 90px;"></div><div class="bulb" style="left: 224px; top: 44px;"></div><div class="bulb" style="left: 260px; top: 26px;"></div><div class="bulb" style="left: 268px; top: 80px;"></div><div class="bulb" style="left: 304px; top: 65px;"></div><div class="bulb" style="left: 329px; top: 20px;"></div><div class="bulb" style="left: 348px; top: 68px;"></div><div class="bulb" style="left: 376px; top: 100px;"></div><div class="bulb" style="left: 385px; top: 49px;"></div><div class="bulb" style="left: 416px; top: 13px;"></div><div class="bulb" style="left: 447px; top: 52px;"></div></div>
+    <div class="bulb-container bc-two"><div class="bulb" style="left: 63px; top: 28px;"></div><div class="bulb" style="left: 106px; top: 56px;"></div><div class="bulb" style="left: 130px; top: 98px;"></div><div class="bulb" style="left: 144px; top: 49px;"></div><div class="bulb" style="left: 181px; top: 22px;"></div><div class="bulb" style="left: 185px; top: 71px;"></div><div class="bulb" style="left: 217px; top: 74px;"></div><div class="bulb" style="left: 237px; top: 16px;"></div><div class="bulb" style="left: 266px; top: 52px;"></div><div class="bulb" style="left: 288px; top: 86px;"></div><div class="bulb" style="left: 312px; top: 39px;"></div><div class="bulb" style="left: 343px; top: 38px;"></div><div class="bulb" style="left: 356px; top: 91px;"></div><div class="bulb" style="left: 393px; top: 78px;"></div><div class="bulb" style="left: 390px; top: 19px;"></div><div class="bulb" style="left: 437px; top: 27px;"></div></div>
+  </div>
+  <div class="door-wrap">
+    <div class="door d-closed"></div>
+  </div>
+  <div class="pup-wrap">
+    <div class="popup hidden">
+      <span class="first-line">Trick or treat!</span>
+      <div class="payment" style="display:none">
+        <iframe frameborder="0" allowtransparency="true" scrolling="no" src="https://money.yandex.ru/embed/donate.xml?account=41001781899975&quickpay=donate&payment-type-choice=on&default-sum=&targets=%D0%A3%D0%B3%D0%BE%D1%89%D0%B5%D0%BD%D0%B8%D0%B5&project-name=&project-site=&button-text=03&successURL=" width="411" height="60"></iframe>
+      </div>
+    </div>
+  </div>
+  <audio id="audio" style="display:none">
+    <source src="sprites/sprite.mp3" type="audio/mpeg" />
+    <source src="sprites/sprite.ogg" type="audio/ogg" />
+  </audio>
+  <script>$(main)</script>
+</body>
+</html>

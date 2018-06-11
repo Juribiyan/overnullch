@@ -1,0 +1,59 @@
+html, body {
+  background-color: black;
+  color: #FFE000;
+}
+.lnt {
+  height: 144px;
+  width: 472px;
+  background-image: url(lanterns.png);
+}
+.balls {
+  text-align: center;
+}
+.balls-containter {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+}
+.lb-n0lch {
+  background-position: -472px 0;
+}
+.lb-0-chan {
+  background-position: -944px 0;
+}
+.lb-0cc {
+  background-position: -1416px 0;
+}
+.lb-alter {
+  background-position: -1888px 0;
+}
+.lit {
+  z-index: 2;
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+.creep {
+  font-family: Creepster;
+  font-weight: 400;
+}
+title {
+  font-size: 5em;
+}
+h2 {
+  font-size: 2em;
+}
+#heavenly-father {
+  /*padding: 0 171px;*/
+  padding-bottom: 20px;
+}
+
+.download-button, .download-button:visited, .loops-button, .loops-button:visited {
+  background: rgb(57, 57, 57);
+}
+.download-button:hover, .loops-button:hover {
+  background: rgb(210, 127, 0);
+}
+.download-button:active, .loops-button:active {
+  box-shadow: inset 0 6px 30px rgb(0, 0, 0);
+}

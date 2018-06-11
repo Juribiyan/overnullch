@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Овернульч</title>
+	<base target="main">
+	<link rel="stylesheet" href="/css/roboto.css">
+	<link rel="stylesheet" href="lib/simplebar/simplebar.css" />
+	<link rel="stylesheet" href="css/over-frame-global.css">
+	<script src="lib/javascript/jquery-1.11.1.min.js"></script>
+	<script src="lib/javascript/lodash.min.js"></script>
+	<script src="lib/javascript/less.min.js"></script>
+	<script src="lib/simplebar/simplebar.min.js"></script>
+	<script src="/lib/javascript/es6-promise.auto.min.js"></script>
+ 	<script src="/lib/es5/frame.js"></script>
+ 	<!--script src="/babel/src/frame.js"></script><script>let html = makeEscapeTagLiteralFn();</script-->
+</head>
+<body>
+	<script src="lib/javascript/svgsprites.js" url="/css/icons/frame.svg"></script>
+	<div class="lc-panel">
+		<div id="pinunpin" class="layout-control framebtn">
+			<svg class="icon">
+				<use class="pup-i i-overlay" xlink:href="#i-overlay"></use>
+				<use class="pup-i i-fixed" xlink:href="#i-fixed"></use>
+				<use class="pup-i i-shift" xlink:href="#i-shift"></use>
+			</svg>
+		</div><div id="refresh" class="layout-control framebtn" title="Функционал ограничен, поскольку скрипт не установлен.">
+			<svg class="icon i-refresh"><use class="refresh-icon" xlink:href="#i-refresh"></use><use class="noscript-warning-icon" xlink:href="#i-warning"></use></svg>
+		</div><div id="live-toggle" class="layout-control framebtn" title="Онлайн-ссылки">
+			<svg class="icon"><use xlink:href="#i-live"></use></svg>
+		</div><div id="frame-hide" class="bfd layout-control framebtn menu-toggle">
+			<svg class="icon">
+				<use class="i-up" xlink:href="#i-up"></use>
+				<use class="i-down" xlink:href="#i-down"></use>
+				<use class="i-left" xlink:href="#i-left"></use>
+			</svg>
+		</div>
+	</div>
+	<div id="noscript-warning">
+		<a href="https://github.com/Juribiyan/overnullch/raw/master/util/overnullch-links.user.js" id="install-script" target="_blank">Установить скрипт</a>
+	</div>
+	<div class="menu-toggle framebtn" id="menu-show">
+		<svg class="icon">
+			<use class="i-right" xlink:href="#i-right"></use>
+		</svg>
+	</div>
+	<div class="pane-container">
+		<div class="mainstuff" data-simplebar-direction="vertical" id="brds-pane">
+			<div id="content"></div>
+			<div class="bottomthing"></div>
+		</div>
+		<div class="mainstuff">
+			<div id="live-panel">
+				<div class="framebtn" id="live-add" title="Добавить ссылку">
+					<svg class="icon"><use xlink:href="#i-plus"></use></svg>
+				</div><div class="framebtn" id="live-refresh" title="Обновить список">
+					<svg class="icon"><use xlink:href="#i-refresh"></use></svg>
+				</div>
+			</div>
+			<div class="scrollable" id="live-pane" data-simplebar-direction="vertical">
+				<div id="live-content" class="uncolorized"></div>
+				<div class="bottomthing"></div>
+			</div>
+		</div>
+	</div>
+	
+	<script>$(main)</script>
+</body>
+</html>

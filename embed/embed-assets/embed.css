@@ -1,0 +1,134 @@
+html, body {
+	height: 20px;
+	width: 88px;
+	font-size: 0;
+	margin: 0;
+	padding: 0;
+}
+button {
+	width: 88px;
+	position: relative;
+	z-index: 2;
+	height: 20px;
+	border: none;
+	background: transparent;
+	font-size: 0;
+	padding: 0;
+	text-align: left;
+	line-height: 20px;
+	outline: none;
+	cursor: pointer;
+	overflow: hidden;
+}
+button::-moz-focus-inner, a::-moz-focus-inner {
+	border: 0;
+}
+#left, #right {
+	display: inline-block;
+	height: 18px;
+	border: 1px solid #10A272;
+	vertical-align: top;
+	transition-property: background, color;
+	transition-duration: 0.3s;
+}
+
+#left {
+	background: white;
+	display: inline-block;
+	width: 21px;
+	border-right: none;
+	border-radius: 2px 0 0 2px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+#right {
+	background: #10A272;
+	width: 65px;
+	border-radius: 0 2px 2px 0;
+	color: white;
+	line-height: 18px;
+	text-align: center;
+	text-transform: uppercase;
+	border-left: none;
+	overflow: hidden;
+	white-space: nowrap;
+	position: absolute;
+	top: 0px;
+	left: 22px;
+}
+.added #left, .added #right {
+	border-color: grey;
+}
+.added #right, .added:hover #right, .added:active #right {
+	background: grey;
+}
+#ball-action {
+	position: absolute;
+	bottom: 0;
+	right: 1px;
+	width: 11px;
+	height: 9px;
+	transition: background-position 0.2s;
+}
+.add #ball-action {
+	background-position: -75px 1px;
+}
+.added #ball-action {
+	background-position: -75px -8px;
+}
+
+button:hover #right {
+	background: #17C38B;
+}
+button:active #right {
+	box-shadow: inset -1px 1px 1px rgba(0, 0, 0, 0.33);
+	padding-top: 1px;
+	height: 17px;
+	color: rgba(255, 255, 255, 0.82);
+	background: #0D825B;
+}
+button:active #left {
+	background: #E6E6E6;
+	box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.33);
+}
+button:active #left .ball {
+	margin-top: 3px;
+}
+button:active #left .ball, button:active #ball-action {
+	filter: brightness(0.92);
+}
+.add {
+	transition: margin-top 0.2s;
+}
+.added .add {
+	margin-top: -18px;
+	transition: margin-top 0.2s;
+}
+
+.spryte {
+	background-image: url(spryte.png)
+}
+.ball {
+  margin-top: 2px;
+  margin-left: 2px;
+  width: 17px;
+  height: 14px;
+}
+.text-container {
+	width: 59px;
+	height: 14px;
+	display: inline-block;
+	vertical-align: middle;
+	background-position: -17px 0;
+	transition: background-position 0.2s, filter 0.2s;
+}
+.added .text-container {
+	background-position: -17px -14px;
+}
+button:not(.added):hover .text-container {
+	  filter: brightness(1.1);
+}
+button:active .text-container {
+	  filter: brightness(0.85)!important;
+}

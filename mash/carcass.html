@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+	<title>Ballsmash</title>
+  <link rel="stylesheet" href="/css/roboto.css">
+  <link rel="stylesheet" href="/lib/simplebar/simplebar.css" />
+	<link rel="stylesheet" href="chantop.css">
+	<script src="/lib/javascript/jquery-1.11.1.min.js"></script>
+	<script src="/lib/javascript/lodash.min.js"></script>
+  <script src="/lib/simplebar/simplebar.min.js"></script>
+	<script src="/lib/es5/chantop.js"></script>
+</head>
+<body>
+  <div class="ly-block" id="battleground-wrap">
+    <header>
+      <img class="logo" src="bst.svg" alt="BALLSMASH">
+      <div class="burger">
+        <div class="b_top b_left"></div> <div class="b_top b_right"></div>
+        <div class="b_mid b_left"></div> <div class="b_mid b_right"></div>
+        <div class="b_btm b_left"></div> <div class="b_btm b_right"></div>
+      </div>
+    </header>
+    <div id="battleground">
+      <div class="challenger" id="c-left"></div>
+      <div class="challenger" id="c-right"></div>
+      <div id="cpanel-wrap">
+        <form id="captcha-panel">
+          <label>Введите капчу:</label>
+          <img>
+          <input type="text" name="captcha">
+          <input type="submit">
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="ly-block" id="chantop-wrap" data-simplebar-direction="vertical">
+   <div id="chantop"></div> 
+  </div>
+	<script>$(main)</script>
+</body>
+</html>

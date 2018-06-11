@@ -1,0 +1,9 @@
+{
+  "presets": [["env", {"modules": false, "comments": false}]],
+  "plugins": ["html-template"],
+  "env": {
+    "production": {
+      "presets": [["minify", {"mangle": false}]]
+    }
+  }
+}

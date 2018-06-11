@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Overnullch Editor</title>
+	<link rel="stylesheet" href="/css/roboto.css">
+	<link rel="stylesheet" href="editor.css">
+	<script src="/lib/javascript/jquery-1.11.1.min.js"></script>
+	<script src="/lib/javascript/lodash.min.js"></script>
+	<script src="jscolor.min.js"></script>
+	<script src="/lib/javascript/Sortable.min.js"></script>
+	<script src="/../../lib/javascript/less.min.js"></script>
+	<script src="beautify-css.js"></script>
+	<script src="/lib/javascript/es6-promise.auto.min.js"></script>
+	<script src="/lib/es5/editor.js"></script>
+	<!--script src="/babel/src/editor.js"></script><script>let html = makeEscapeTagLiteralFn(v => v)</script-->
+</head>
+<body>
+	<script src="/lib/javascript/svgsprites.js" url="editor.svg,/css/icons/frame.svg"></script>
+	<div id="chan-library" class="show-default">
+		<div class="collapsible-content">
+			<header id="tabs">
+				<input type="text" id="searchbox" placeholder="Поиск...">
+				<div data-tab="default" class="tab selected" title="Стандартные">Default</div>
+				<div data-tab="custom" class="tab" title="Загруженные сообществом">Custom</div>
+				<div data-tab="drafts" class="tab" title="Мои черновики">Drafts</div>
+				<div data-tab="search" class="tab search-tab" title="Поиск">
+					<svg class="icon search-enable"><use xlink:href="#i-search"></use></svg>
+					<svg class="icon search-close" title="Закрыть поиск"><use xlink:href="#i-x"></use></svg>
+				</div>
+			</header>
+			<div id="chans"></div>
+		</div>
+		<div class="sidebar">
+			<svg class="icon showhide"><use xlink:href="#i-chevron-right"></use></svg>
+			<div class="lib-title">Библиотека</div>
+			<svg class="icon showhide"><use xlink:href="#i-chevron-right"></use></svg>
+		</div>
+	</div>
+	<div class="basic-settings">
+		<!-- No native columns because of Chrome bug #84030 -->
+		<div class="column">
+			<div class="bs-sect tip-container">
+				<div class="section-title st-inline">URL</div>
+				<input type="text" class="inline-text-input after-st validable" placeholder="https://mychan.tk" id="chan-url" pattern="^https?:\/\/.+[^\/]$" maxlength="100" minlength="3"  data-aftervalid="checkuniq" data-uniq="url" required>
+				<div class="tipper question">
+					<div class="tooltip-wrap info-tip">
+						<div class="tooltip">Адрес сайта. С обязательным http(s):// вначале и без слеша в конце.</div>
+					</div>
+				</div>
+			</div>
+			<div class="bs-sect tip-container">
+				<div class="section-title st-inline">Имя</div>
+				<input type="text" class="inline-text-input after-st validable" placeholder="Mychan" id="chan-name" maxlength="50" minlength="3" data-aftervalid="checkuniq" data-uniq="name" required>
+				<div class="tipper question">
+					<div class="tooltip-wrap info-tip">
+						<div class="tooltip">Имя сайта, которое будет отображаться во фрейме и каталоге. Должно однозначно идентифицировать сайт (т. е. название «Возрожденный нульчан» не годится и будет забанено).</div>
+					</div>
+				</div>
+			</div>
+			<div class="bs-sect tip-container">
+				<div class="section-title st-inline">id</div>
+				<input type="text" class="inline-text-input after-st validable" placeholder="mychan" id="chan-id" minlength="3" maxlength="20" data-aftervalid="checkuniq" data-uniq="id" pattern="^[a-z\-_0-9]+$" required>
+				<svg class="icon input-lock" title="Заблокировано"><use xlink:href="#i-lock"></use></svg>
+				<div class="tipper question">
+					<div class="tooltip-wrap info-tip">
+						<div class="tooltip">ID сайта для внутренних нужд. Изменить ID будет невозможно.</div>
+					</div>
+				</div>
+			</div>
+			<div class="bs-sect tip-container" id="chanball-sect">
+				<div class="section-title st-fullwidth">Чанбол</div>
+				<div class="tipper question" id="ball-tipper">
+					<div class="tooltip-wrap info-tip">
+						<div class="tooltip">Чанбол для визуальной идентификации в каталоге и рейтинге. Гайдлайны находятся в <a href="http://change.me">этом треде</a>.<br>
+						Стрелками можно настроить положение чанбола на карточке.</div>
+					</div>
+				</div>
+				<div class="chanball-wrap" id="chanball-wrap">
+					<button class="chanball-dropzone">
+						<div class="cbdz-msg">Бросьте чанбол сюда</div>
+					</button>
+					<img id="chanball" class="show-onchanballexist">
+					<div class="channame-overlay show-onchanballexist"></div>
+					<button class="cb-button show-onchanballexist" id="reup-chanball" title="Загрузить новый чанбол">
+						<svg class="icon"><use xlink:href="#i-arrowup"></use></svg>
+					</button>
+					<input type="file" id="chanballFileInput" style="display:none">
+				</div>
+				<div class="chanball-position" title="Регулировка позиции чанбола">
+					<div class="cb-position-tweaker">
+						<button class="btn" data-inc="-1"><svg class="icon"><use xlink:href="#i-arrowup"></use></svg></i></button>
+						<input type="number" value="0" id="position-tweak-top" min="-100" max="100">
+						<button class="btn" data-inc="1"><svg class="icon"><use xlink:href="#i-arrowup" transform="rotate(180 8 8)"></use></svg></button>
+					</div>
+					<div class="cb-position-tweaker">
+						<button class="btn" data-inc="-1"><svg class="icon"><use xlink:href="#i-arrowup" transform="rotate(-90 8 8)"></use></svg></button>
+						<input type="number" value="0" id="position-tweak-left" min="-100" max="100">
+						<button class="btn" data-inc="1"><svg class="icon"><use xlink:href="#i-arrowup" transform="rotate(90 8 8)"></use></svg></button>
+					</div>
+					<div class="show-onchanballexist guide"></div>
+				</div>
+				<div class="subsection">
+					<div class="section-title st-inline _vam">Фон</div>
+					<div id="color-selector">
+						<input class="color jscolor colorbox" id="bgc-from">
+						<button class="btn inter-button" id="change-direction"><svg class="icon"><use xlink:href="#i-arrowup" transform="rotate(90 8 8)"></use></svg></button>
+						<input class="color jscolor colorbox" id="bgc-to">
+					</div>
+				</div>
+			</div>
+			<div class="bs-sect foradmin-show">
+				<label class="admin-label" for="default">
+					<input type="checkbox" id="default" class="inline-checkbox">&nbsp;default
+				</label>
+				<label class="admin-label" for="included">
+					<input type="checkbox" id="included" class="inline-checkbox">&nbsp;included
+				</label>
+			</div>
+		</div>
+		<div class="column">
+			<div class="bs-sect tip-container">
+				<div class="section-title st-inline">Вики</div>
+				<input type="text" class="inline-text-input after-st validable" placeholder="Mychan" id="chan-wiki" maxlength="100">
+				<div class="tipper question">
+					<div class="tooltip-wrap info-tip">
+						<div class="tooltip">Ссылка на вики-статью о сайте. Для статей на вики по умолчанию (1chan.ca — вики по умолчанию) можно вводить только название статьи. При пустом значении ссылка будет отправлять на статью с названием, идентичным названию сайта, на вики по умолчанию.</div>
+					</div>
+				</div>
+			</div>
+			<div class="bs-sect tip-container">
+				<input id="chan-userboards_catname" class="section-title validable" type="text" value="2.0" placeholder="2.0" maxlength="50">
+				<input type="text" class="inline-text-input after-st validable" placeholder="" id="chan-userboards" pattern="^https?:\/\/.+" maxlength="100" >
+				<div class="foradmin-show" style="margin-top: 6px;">
+					<div class="section-title st-inline">Тип</div>
+					<select name="chan-userboards_system" id="chan-userboards_system">
+						<option value="instant">Instant 0chan</option>
+						<option value="0chan">0chan.hk</option>
+					</select>
+				</div>
+				<div class="tipper question">
+					<div class="tooltip-wrap info-tip">
+						<div class="tooltip">Ссылка (полная) на JSON-файл, содержащий актуальный список пользовательских досок. В Instant 0chan генерируется автоматически (/cloud20.php или /boards20.json в зависимости от версии). Схема файла описана <a href="TODO.HTML" target="_blank">здесь</a>.</div>
+					</div>
+				</div>
+			</div>
+			<div class="bs-sect tip-container">
+				<div class="section-title">Формат ссылок</div>
+				<div class="tipper question">
+					<div class="tooltip-wrap info-tip">
+						<div class="tooltip">
+							<p>Формат, по которому строятся ссылки на доски.</p>
+							<p><b>Префикс</b> ставится между URL и идентификатором доски. Префикс по умолчанию — «/» (0chan.ru/b). Если поменять его, к примеру, на «/boards.php?b=», то ссылки будут принимать вид «0chan.ru/boards.php?b=b»</p>
+							<p><b>Постфикс</b> ставится после идентификатора доски. По умолчанию не применяется. Иногда сайты не работают без «/» в конце либо имеют формат «exaparasha.tk/b.php» — в последнем случае постфиксом будет «.php».</p>
+						</div>
+					</div>
+				</div>
+				<div class="linkformat-inputs">
+					<div class="vcell">
+						<label for="chan-prefix">Префикс</label>
+						<input class="validable" type="text" id="chan-prefix" maxlength="20">
+					</div>
+					<div class="vcell">
+						<label for="chan-postfix">Постфикс</label>
+						<input class="validable" type="text" id="chan-postfix" maxlength="20">
+					</div>
+				</div>
+			</div>
+			<div class="bs-sect tip-container">
+				<div class="section-title">Опции</div>
+				<div class="tipper question">
+					<div class="tooltip-wrap info-tip">
+						<div class="tooltip">Опциональные возможности для сайта. Для ознакомления включите опцию и прочтите справку по ней.</div>
+					</div>
+				</div>
+				<ul class="widget-list">
+					<li><label for="custom-css">
+						<input type="checkbox" name="color-theme" id="custom-css" class="inline-checkbox">&nbsp;Особый CSS
+					</label></li>
+					<li><label for="radio">
+						<input type="checkbox" name="radio-editor" id="radio" class="inline-checkbox">&nbsp;Радио
+					</label></li>
+				</ul>
+			</div>
+			<div class="bs-sect tip-container">
+				<div class="tipper question" id="submit-tipper">
+					<div class="tooltip-wrap info-tip">
+						<div class="tooltip">Действия для текущего сайта.</div>
+					</div>
+				</div>
+				<div class="chan-actions">
+					<button class="btn" title="Очистить" id="new-chan"><svg class="icon"><use xlink:href="#i-new"></use></svg></i></button>
+					<button disabled class="btn" title="Новый чан на основе этого" id="clone-this"><svg class="icon"><use xlink:href="#i-clone"></use></svg></i></button>
+					<button class="btn" title="Сохранть в черновики" id="save-draft"><svg class="icon"><use xlink:href="#i-save-draft"></use></svg></i></button>
+					<button class="btn" title="Обубликовать" id="publish"><svg class="icon"><use xlink:href="#i-upload"></use></svg></i></button>
+					<button disabled class="btn" title="Удалить чан" id="delete-this"><svg class="icon"><use xlink:href="#i-x"></use></svg></i></button>
+				</div>
+				<form id="upload-form" autocomplete="off">
+					<div class="ondraftdelete-hide onprompt-hide">
+						<label for="password" class="password-reveal">Пароль:</label>
+						<input id="pswd" type="password" name="chanpass" value="" required readonly>
+					</div>
+
+					<div class="ondraftdelete-hide onprompt-hide">
+						<img class="captcha">
+						<svg class="icon" style="margin: 0 4px;"><use xlink:href="#i-chevron-right"></use></svg>
+						<input id="captcha" type="text" placeholder="Капча" required>
+					</div>
+
+					<button type="submit" class="sf-btn onprompt-hide" id="submit-form">
+						<svg class="icon sb-upload"><use xlink:href="#i-upload"></use></svg>
+						<span class="sb-upload">Опубликовать</span>
+						<svg class="icon sb-delete"><use xlink:href="#i-x"></use></svg>
+						<span class="sb-delete">Удалить</span><span class="ondraftdelete-show"> черновик</span>
+					</button>
+
+					<div class="prompt-msg onidchanged-show">ID был изменен.</div>
+					<button class="sf-btn onidchanged-show condensed" id="draft-saveasnew">
+						<span>Сохранить как новый черновик</span>
+					</button>
+					<button class="sf-btn onidchanged-show condensed prompt-second-btn" id="draft-changeid">
+						<span>Заменить </span><span id="id-to-change">original0chanrunet</span>
+					</button>
+
+					<div class="prompt-msg onidexists-show condensed">Черновик с этим ID уже существует.</div>
+					<button class="sf-btn onidexists-show condensed" id="draft-savemodifiedid">
+						<span>Сохр. как </span><span id="proposed-id">original0chanrunet2</span>
+					</button>
+					<button class="sf-btn onidexists-show condensed prompt-second-btn" id="draft-overwrite">
+						<span>Заменить </span><span id="id-to-overwrite">original0chanrunet</span>
+					</button>
+
+					<svg id="form-spinner" class="icon spinning"><use xlink:href="#i-spinner"></use></svg>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div id="chan-structure" class="structure-representation sw_UI sw_sync tip-container">
+		<div class="board-section-header">
+			<div class="section-title st-inline">Доски</div>
+			<div class="tipper question pointing-up" id="struct-tipper">
+				<div class="tooltip-wrap info-tip">
+					<div class="tooltip">Структура досок сайта. Ссылки на доски могут быть как относительными, так и абсолютными (с http(s)://). Структуру досок можно импортировать и экспортировать в фомате JSON.</div>
+				</div>
+			</div>
+			<div id="view-toggle" class="lr-switch">
+				<label class="swl-left">UI</label>
+				<button class="switch-body">
+					<div class="switch-trigger"></div>
+				</button>
+				<label class="swl-right">JSON</label>
+			</div>
+		</div>
+		<div id="tree">
+			<div id="categories"></div>
+			<button class="tree-add add-cat" title="Добавить категорию">
+			  <div class="inner-border">
+			    <svg class="icon"><use xlink:href="#i-folder-plus-stroke"></use></svg>
+			  </div>
+			</button>
+		</div>
+		<textarea id="tree-json" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+	</div>
+	<div id="options">
+		<div id="color-theme" class="tip-container optional-pane expanded expandee">
+			<div class="section-title st-inline expander with-icon">
+				<svg class="icon">
+					<use class="exp-plus" xlink:href="#i-circled-plus"></use>
+					<use class="exp-minus" xlink:href="#i-circled-minus"></use>
+				</svg>
+				<span>Цветовая схема</span>
+			</div>
+			<div class="tipper question pointing-up" id="style-tipper">
+				<div class="tooltip-wrap info-tip">
+					<div class="tooltip">Внешний вид сайта во фрейме. В простом режиме тема определяется двумя цветами, в продвинутом используется язык <a href="http://lesscss.org" target="_blank">LESS</a>.</div>
+				</div>
+			</div>
+			
+			<div class="expandee-content">
+				<div style="font-size: 0;  margin-bottom: 10px;">
+					<div class="vcell">
+						<label>Цвет фона</label>
+						<input class="color jscolor colorbox" id="bgColor" value="2c333d" data-default="2c333d">
+					</div>
+					<div class="vcell">
+						<label>Цвет ссылок</label>
+						<input class="color jscolor colorbox" id="linkColor" value="37c999" data-default="37c999">
+					</div>
+				</div>
+				<div class="advanced-button-wrapper">
+					<label for="advance-less">
+						<input type="checkbox" id="advance-less" class="inline-checkbox">&nbsp;Advanced
+					</label>
+				</div>
+				<div class="advanced-less">
+					<pre id="less-preamble"></pre>
+					<textarea id="less-enter" value="" rows="7" disabled></textarea>
+					<pre>}</pre>
+				</div>
+				<div class="section-title st-inline">Превью</div>
+				<label for="onchan" class="after-st" id="onchan-label">
+					<input type="checkbox" name="onchan" id="onchan" class="inline-checkbox">&nbsp;.onchan
+				</label>
+				<div class="chan-css-preview chan" title=".chan">
+					<div class="chan-header" title=".chan-header">Заголовок</div>
+					<div class="chan-overlay">
+					  <a class="ibtn icon-home" title=".ibtn" href="#" onclick="javascript:return false"><svg class="icon"><use xlink:href="#i-home"></use></svg></a>
+					  <a class="ibtn icon-info" title=".ibtn" href="#" onclick="javascript:return false"><svg class="icon"><use xlink:href="#i-info"></use></svg></a>
+					</div>
+					<div class="boards" title=".boards">
+						<div class="category" title=".category">
+							<div class="cat-header" title=".cat-header">
+							  <span class="ch-name" title=".ch-name">Заголовок категории</span>
+							  <div class="cat-options" title=".cat-options">
+							  	<svg class="ibtn icon-delete icon"><use xlink:href="#i-delete"></use></svg>
+							  </div>
+							</div>
+							<div class="cat-boards">
+								<a href="#" onclick="javascript:return false" class="board">Ссылка</a>
+								<a href="#" onclick="javascript:return false" class="board">Ссылка</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="radio-editor" class="optional-pane expanded expandee tip-container">
+			<div class="section-title st-inline expander with-icon">
+				<svg class="icon">
+					<use class="exp-plus" xlink:href="#i-circled-plus"></use>
+					<use class="exp-minus" xlink:href="#i-circled-minus"></use>
+				</svg>
+				<span>Радио</span>
+			</div>
+			<div class="tipper question pointing-up" id="radio-tipper">
+				<div class="tooltip-wrap info-tip">
+					<div class="tooltip">Позволяет добавить виджет для радио. Ссылки на стримы строятся из основного URL и /path стрима. При большом количестве стримов с похожим названием можно воспользоваться размножением по шаблону. Пример заполнения формы можно подсмотреть у Радио Анонимус.</div>
+				</div>
+			</div>
+			<div class="expandee-content">
+				<div class="section-title st-inline">URL</div>
+				<input type="text" class="inline-text-input after-st validable no-val-onblur" placeholder="http://mychan.tk:8000/" id="chan-radiourl" pattern="^https?:\/\/.+" maxlength="100" minlength="3"  required>
+				<div id="streams"></div>
+				<button id="add-stream" class="tree-add" title="Добавить стрим">
+				  <div class="inner-border">
+				    <svg class="icon" style="width: 18px;"><use xlink:href="#i-add-stream"></use></svg>
+				  </div>
+				</button>
+			</div>
+		</div>
+	</div>
+	<a id="dl-victim" style="display:none"></a>
+	<script>$(main)</script>
+</body>
+</html>

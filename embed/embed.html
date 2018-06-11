@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Добавить в овернульч</title>
+	<link rel="stylesheet" href="embed-assets/embed.css">
+</head>
+<body>
+	<button class="add" title="Добавить в Овернульч">
+		<div id="left">
+			<div class="ball spryte"></div>
+			<div class="spryte" id="ball-action"></div>
+		</div>
+		<div id="right">
+			<div class="text-container spryte"></div>
+		</div>
+	</button>
+	<script>
+!(function() {
+	var chid = window.name.split('overbutton_')[1]
+	, button = document.querySelector('button')
+	, isAdded = false
+	, pristine = false
+	, tabOpened = false
+	, installed_chans = []
+	if(localStorage['myChans_new']) {
+		try {
+			installed_chans = JSON.parse(localStorage['myChans_new'])
+		}
+		catch(e) {}
+	}
+	else {
+		pristine = true;
+	}
+
+	function chanByID(id, from) {
+		if(!from) 
+			return null
+		var ret = null
+		from.some(function(chan, index) {
+			if(chan.id == id) {
+				ret = chan
+				return true
+			}
+			else return false
+		})
+		return ret
+	}
+
+	function basicInstall(chans) {
+		chans.forEach(function(chan) {
+			if(chan.included) {
+				installed_chans.push(chan)
+				if(chan.id == chid)
+					add()
+			}
+		})
+		localStorage['myChans_new'] = JSON.stringify(installed_chans)
+	}
+
+	if(chanByID(chid, installed_chans))
+		add()
+
+	var request = new XMLHttpRequest();
+	request.open('GET', '/chans/chans.json?v='+(new Date().getTime()), true);
+	request.onload = function() {
+	  if (request.status >= 200 && request.status < 400) {
+	    try {
+	    	var data = JSON.parse(request.responseText);
+	    }
+	    catch(e) {
+	    	console.error('[Overnullch embed]: Список сайтов поврежден')
+	    }
+	    if(data && data.hasOwnProperty('chans')) {
+	    	data = data.chans
+	    	if(pristine) {
+	    		basicInstall(data)
+	    	}
+	    	var chan = chanByID(chid, data)
+	    	button.onclick = function() {
+	    		if(chan) {
+	    			if(!isAdded) {
+	    				installed_chans.push(chan)
+	    				add(true)
+	    			}
+	    			else {
+	    				installed_chans = installed_chans.filter(function(ch) {
+	    					return (ch.id !== chan.id)
+	    				})
+	    				remove()
+	    			}
+	    			localStorage['myChans_new'] = JSON.stringify(installed_chans)
+	    		}
+	    		else
+	    			console.error('[Overnullch embed]: Сайт отсутствует в каталоге')
+	    	}
+	    }
+	  } 
+	  else {
+	    console.error('[Overnullch embed]: Ошибка при загрузке списка сайтов.')
+	  }
+	};
+	request.onerror = function() {
+	  console.error('[Overnullch embed]: Ошибка при загрузке списка сайтов.')
+	};
+	request.send();
+
+	function add(openWindow) {
+		isAdded = true;
+		button.classList.add('added')
+		button.title = "Удалить из Овернульча"
+		if (!tabOpened && openWindow) {
+			window.open('http://overnullch/#/http://overnullch/catalog/', '_blank')
+			tabOpened = true
+		}
+	}
+
+	function remove() {
+		isAdded = false;
+		button.classList.remove('added');
+		button.title = "Добавить в Овернульч"
+	}
+})()
+	</script>
+</body>
+</html>
