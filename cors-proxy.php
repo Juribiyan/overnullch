@@ -139,6 +139,7 @@
 $enable_jsonp    = false;
 $enable_native   = false;
 $valid_url_regex = '/.*/';
+$proxy = false; // Not using I0_CURL_PROXY from config.php to skip the unnecessary db connection
 
 // ############################################################################
 
@@ -159,6 +160,9 @@ if ( !$url ) {
 } else {
   $ch = curl_init( $url );
   
+  if ($proxy) 
+    curl_setopt($ch, CURLOPT_PROXY, $proxy); 
+
   if ( strtolower($_SERVER['REQUEST_METHOD']) == 'post' ) {
     curl_setopt( $ch, CURLOPT_POST, true );
     curl_setopt( $ch, CURLOPT_POSTFIELDS, $_POST );
