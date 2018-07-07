@@ -214,17 +214,20 @@ var catalog = {
 			let $ch = $(this.buildChan(chan))
 			$ch[0]._libdata = chan
 			$('#catalog-contents').append($ch)
+			this.css += this.makeOffset(chan)
 		})
 		$('#import-draft').insertAfter('.cat-chan:last')
+		injector.inject('chan-offsets', this.css)
 	},
 	buildChan: function(chan) {
+		console.log(chan.id)
 		let name = _.escape(chan.name)
 		, wiki = (chan.wiki && chan.wiki.match(/https?:\/\//)) ? chan.wiki : (conf.wiki+(chan.wiki || name))
 		, search = `${chan.originalID || chan.id} ${name} ${chan.url.replace(/^https?:\/\//, '')} ${(chan.wiki || '').replace(/^https?:\/\//, '')}`
 		, ballSrc = chan.ball || `/chans/balls/${chan.section}/${chan.section == 'drafts' ? 'no-ball' : chan.id}.png?uid=${chan._id}${chan.ballv ? `&v=${chan.ballv}` : ''}`
 		return html`<div class="cat-chan sect-${chan.section} ${chan.included ? 'included-chan' : ''}" data-search="${search.toLowerCase()}" id="cat_${chan.id}">
 			<div class="cc-ball-wrap" style="${makeGradient(chan.catbg)}">
-				<img src="${ballSrc}" class="cc-ball" ${chan.offset ? makeOffset(chan.offset) : ''}></img>
+				<img src="${ballSrc}" class="cc-ball"></img>
 				<div class="channame-overlay">
 					<a href="${chan.url}">${name}</a>
 				</div>
@@ -246,6 +249,21 @@ var catalog = {
 			</a>
 			<textarea onclick="this.select()">${_.escape(`<script src="${document.location.origin || (document.location.protocol + '//' + document.location.host)}/embed/add.js" chan="${chan.id}"></script>`)}</textarea>
 		</div>`
+	},
+	css: '',
+	makeOffset: function(chan) {
+		if (! chan.offset)
+			return '';
+		let left = chan.offset[0], top = chan.offset[1]
+		, res = '', hov = ''
+		if (left == 0 && top == 0)
+			return '';
+		;['', '-webkit-', '-ms-', '-moz-', '-o-'].forEach(prefix => {
+			res += `${prefix}transform: translate(${left}px, ${top}px) scale(1); `
+			hov += `${prefix}transform: translate(${Math.round(left * 0.66)}px, ${Math.round(top * 0.66)}px) scale(0.66); `
+		})
+		return `#cat_${chan.id.replace(/\!/g, '\\!')} .cc-ball {${res}}
+			#cat_${chan.id.replace(/\!/g, '\\!')}:hover .cc-ball {${hov}}`
 	},
 	chanByID: id => {
 		let ch = document.querySelector(jq`#cat_${id}`)
@@ -316,28 +334,17 @@ function makeGradient(colors) {
 	return 'background:' + ret;
 }
 
-function makeOffset(offset) {
-	let left = offset[0], top = offset[1]
-	, ret = ''
-	if (left == 0 && top == 0) {
-		return ret
-	}
-	;['', '-webkit-', '-ms-', '-moz-', '-o-'].forEach(prefix => {
-		ret += `${prefix}transform: translate(${left}px, ${top}px); `
-	})
-	return `style="${ret}"`
-}
 
 NodeList.prototype.forEach = Array.prototype.forEach;
 
 // Produces a function which applies fn() to all values
-function makeEscapeTagLiteralFn(fn) {
+function makeEscapeTagLiteralFn(fn = v => v) {
   return function(strings, ...values) {
     let result = ""
     for (let i = 0; i < strings.length; i++) {
       result += strings[i]
       if (i < values.length) {
-        result += fn(values[i])
+        result += fn(''+values[i])
       }
     }
     return result
