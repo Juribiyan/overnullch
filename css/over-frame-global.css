@@ -61,10 +61,6 @@ body {
   padding: 1px 0;
 }
 
-/* .l-v .chan {
-  width: 228px;
-} */
-
 .chan-overlay {
   display: inline-block;
   position: absolute;
@@ -613,8 +609,6 @@ body:hover .panel-over,
   color: #fff;
 }
 
-
-
 select {
   color: inherit;
   background: transparent;
@@ -641,7 +635,6 @@ select option {
 .play-icon, .pause-icon {
   position: absolute;
 }
-
 
 .streaming .play-icon {
   opacity: 0;
@@ -705,7 +698,6 @@ select option {
 .play-icon {
   border-left-color: currentColor;
 }
-
 
 .pause-icon,.pause-icon:before {
   background: currentColor;
