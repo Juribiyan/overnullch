@@ -44,3 +44,6 @@ Temporary Items
 
 # PowerGREP backups
 Backup\ *\ of*
+
+# Node
+node_modules
