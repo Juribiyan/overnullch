@@ -158,6 +158,9 @@ header {
   -webkit-transition: opacity 0.3s;
   -o-transition: opacity 0.3s;
   transition: opacity 0.3s;
+  max-height: 32px;
+  object-fit: contain;
+  -o-object-fit: contain;
 }
 .list-chan-title {
   font-size: 15px;
