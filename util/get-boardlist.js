@@ -34,7 +34,6 @@ $$('.category').forEach(cat => {
 })
 console.log(JSON.stringify(res))
 
-
 //i0 (from board page)
 var cats = []
 $('.menu-sect:not(#ms-_options)').each(function() {
