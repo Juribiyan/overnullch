@@ -11,7 +11,6 @@ require ROOTDIR.'overnullch-config.php';
 $tc_db->SetFetchMode(ADODB_FETCH_ASSOC);
 $tc_db->Execute('SET NAMES utf8');
 define('DB', 'over_chans');       // database names
-$max_ball_size = array(width => 300, height => 300);
 
 //field pre-check
 if (isset($_GET['checkuniq'])) {
@@ -26,8 +25,9 @@ if (isset($_GET['checkuniq'])) {
 }
 
 $mods = explode('|', MOD_HASHES);
+$admins = explode('|', ADMIN_HASHES);
 
-if ($_GET['forceupdate'] == MASTER_HASH) {
+if (in_array($_GET['forceupdate'], $admins)) {
   update_json();
 }
 
@@ -41,7 +41,7 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
     retreat(array('wrong-captcha'));
 
   $hash = hash('sha256', $_POST['password'].SALT);
-  if ($hash == MASTER_HASH) {
+  if (in_array($hash, $admins)) {
     $is_admin = true;
     $is_mod = true;
   }
@@ -229,7 +229,7 @@ function check_validity($input, $f) {
     list($width, $height, $type) = getimagesize($ball['tmp_name']);
     if ($type != IMAGETYPE_PNG)
       $errs []= array(field => 'ball', msg => 'image-not-png');
-    if ($width > $max_ball_size['width'] || $height > $max_ball_size['height'])
+    if ($width > 200 || $hight > 200)
       $errs []= array(field => 'ball', msg => 'image-too-large');
     $output['ball'] = $ball;
   }
