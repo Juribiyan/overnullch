@@ -199,7 +199,7 @@ function check_validity($input, $f) {
 
   if (isset($input['userboards'])) {
     if (isset($input['userboards_system'])) {
-      if (!in_array($input['userboards_system'], array('instant', '0chan')))
+      if (!in_array($input['userboards_system'], array('instant', '0chan', 'meguca', 'lynxchan', 'vichan', '4chan', 'sosach')))
         $errs []= array(field => "userboards_system", msg => 'invalid');
       $output['userboards_system'] = $input['userboards_system'];
     }
@@ -300,7 +300,6 @@ function check_uniqueness_forall($input, $act) {
 //basic actions
 function new_chan($input) {
   global $tc_db;
-  // exit($input['userboards_system']);
   $fields = array('id', 'passhash', 'name', 'url', 'boards', 'offset', 'catbg', 'userboards', 'prefix', 'postfix', 'wiki', 'radio', 'colors', 'advanced_less', 'default', 'included', 'userboards_catname', 'userboards_system');
   foreach($fields as &$f) {
     if (array_key_exists($f, $input)) {
