@@ -2,6 +2,8 @@
 
 var IS_ADMIN = false;
 
+const max_ball_size = {width: 300, height: 300}
+
 const main = () => {
 	if(LSfetchJSON('IS_ADMIN')) {
 		IS_ADMIN = true
@@ -501,7 +503,7 @@ var ball = {
 
 		let $ball = $('#chanball').attr('src', src)
 		$ball.one('load', () => {
-			if ($ball.width() > 200 || $ball.height > 200) 
+			if ($ball.width() > max_ball_size.width || $ball.height > max_ball_size.height) 
 				this.showErrors('image-too-large')
 			else {
 				this.file = src

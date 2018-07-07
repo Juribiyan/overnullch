@@ -11,6 +11,7 @@ require ROOTDIR.'overnullch-config.php';
 $tc_db->SetFetchMode(ADODB_FETCH_ASSOC);
 $tc_db->Execute('SET NAMES utf8');
 define('DB', 'over_chans');       // database names
+$max_ball_size = array(width => 300, height => 300);
 
 //field pre-check
 if (isset($_GET['checkuniq'])) {
@@ -228,7 +229,7 @@ function check_validity($input, $f) {
     list($width, $height, $type) = getimagesize($ball['tmp_name']);
     if ($type != IMAGETYPE_PNG)
       $errs []= array(field => 'ball', msg => 'image-not-png');
-    if ($width > 200 || $hight > 200)
+    if ($width > $max_ball_size['width'] || $height > $max_ball_size['height'])
       $errs []= array(field => 'ball', msg => 'image-too-large');
     $output['ball'] = $ball;
   }
