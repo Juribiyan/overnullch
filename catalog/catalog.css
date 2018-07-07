@@ -565,6 +565,10 @@ header {
 .cat-chan:hover .cc-ball {
   -webkit-filter: brightness(1.3);
           filter: brightness(1.3);
+  -webkit-transform: scale(0.66);
+      -ms-transform: scale(0.66);
+       -o-transform: scale(0.66);
+          transform: scale(0.66);
 }
 
 .cc-toolbar button:hover {
