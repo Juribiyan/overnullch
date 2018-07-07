@@ -1,11 +1,11 @@
-# <img src="https://raw.githubusercontent.com/Juribiyan/overnullch/master/fav/favicon-32x32.png"> Overnullch
+# <img src="https://gitgud.io/ubhelbr/overnullch/raw/master/fav/favicon-32x32.png"> Overnullch
 
 ## Развертывание
 *В настоящее время Овернульч не поставляется с удобным инсталлером или сборщиком, но это может быть справлено в дальнейшем.*
 
 ### База данных
 * Овернульч использует MySQL.
-* Учетные данные для входа в базу данных вводятся в `config.php`. Поддерживается совместное использование с [Instant 0chan](https://github.com/devarped/instant-0chan), в этом случае для подключения к базе данных будет использоваться `config.php` инстанта.
+* Учетные данные для входа в базу данных вводятся в `config.php`. Поддерживается совместное использование с [Instant 0chan](https://gitgud.io/devarped/instant-0chan), в этом случае для подключения к базе данных будет использоваться `config.php` инстанта.
 * Импортируйте `/util/overnullch.sql` в используемую базу данных.
 
 ### Учетные записи
