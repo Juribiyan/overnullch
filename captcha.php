@@ -1,4 +1,5 @@
 <?php
+$_GLOBALS['skipdb'] = true;
 define ( 'DOCUMENT_ROOT', dirname ( __FILE__ ) );
 define("img_dir", DOCUMENT_ROOT."/captcha/");
 include("nrand.php");
