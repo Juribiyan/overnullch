@@ -9,6 +9,7 @@ if (!headers_sent()) {
 $cf = array();
 
 $cf['KU_ROOTDIR']   = realpath(dirname(__FILE__))."/"; // Full system path of the folder containing kusaba.php, with trailing slash. The default value set here should be OK.. If you need to change it, you should already know what the full path is anyway.
+$cf['KU_CAPTCHALANG'] = 'num'; // Default captcha language to be used if no captchalang cookie is present. Supported values: ru, en, num (numeric)
 
 // Database
 $cf['KU_DBTYPE']          = 'mysqli';	// Never change this

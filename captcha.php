@@ -2,18 +2,22 @@
 $_GLOBALS['skipdb'] = true;
 define ( 'DOCUMENT_ROOT', dirname ( __FILE__ ) );
 define("img_dir", DOCUMENT_ROOT."/captcha/");
-include("nrand.php");
+require 'config.php';
+include 'nrand.php';
+
+$langs = array("ru", "en", "num");
+$captchalang = (isset($_COOKIE['captchalang']) && in_array($_COOKIE['captchalang'], $langs) ? $_COOKIE['captchalang'] : KU_CAPTCHALANG);
 $ltrs = rand(4, 7);
-if(isset($_COOKIE['captchalang'])) {
-	if($_COOKIE['captchalang'] == 'en') $captcha = english_word($ltrs);
-	elseif($_COOKIE['captchalang'] == 'num') {
-		$ltrs = rand(4, 7);
-		for ($i=0; $i < $ltrs; $i++) { 
-			$captcha .= rand(0, 9);
-		}
+if($captchalang == 'en') 
+	$captcha = english_word($ltrs);
+elseif($captchalang == 'ru')
+	$captcha = generate_code($ltrs);	
+else {
+	$ltrs = rand(4, 7);
+	for ($i=0; $i < $ltrs; $i++) { 
+		$captcha .= rand(0, 9);
 	}
 }
-else $captcha = generate_code($ltrs);
 session_start();
 function img_code($code) {
   if(isset($_GET['color'])) {
