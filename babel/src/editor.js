@@ -292,8 +292,8 @@ const main = () => {
 		styles.update()
 	})
 
-	$('.captcha').click(refreshCaptcha).addClass('not-loaded')
-
+	$('.captcha').addClass('not-loaded').click(ev => refreshCaptcha(ev.ctrlKey || ev.altKey))
+	
 	$('.widget-list input').on('change', function() {
 		$(jq`#${$(this).attr('name')}`).toggle($(this).prop('checked'))
 	})
@@ -383,8 +383,8 @@ const main = () => {
 	drafts.load()
 }
 
-function refreshCaptcha() {
-	$('.captcha').attr('src', `/captcha.php?color=255,255,255&v=${Math.random()}`).removeClass('not-loaded')
+function refreshCaptcha(switch_lang=false) {
+	$('.captcha').attr('src', `/captcha.php?color=255,255,255&v=${Math.random()}${switch_lang ? '&switch' : ''}`).removeClass('not-loaded')
 	$('#captcha').val('')
 }
 
