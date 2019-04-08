@@ -25,13 +25,13 @@
 	<script src="lib/javascript/carcass.js"></script>
 </head>
 	<body>
-		<iframe src="frame.html" name="list" scrolling="auto" id="list"></iframe>
+		<iframe src="frame.html" name="list" scrolling="auto" id="list" loading="eager"></iframe>
 		<script>
 		if(location.hash) {
 			var go = location.hash.split(/#\/?/)[1].split(/\/$/)[0]
 			if (go == location.protocol + '//' + location.host)
 				go = '/index.html'
-			document.write('<iframe src="'+go+'" name="main" id="main" class="not-frame"></iframe>')
+			document.write('<iframe src="'+go+'" name="main" id="main" class="not-frame" loading="eager"></iframe>')
 		}
 		else if (location.search && location.search.split('?')[1]) {
 			var go = location.search.split('?')[1]
@@ -39,12 +39,12 @@
 				go = go.split('/')
 				if (go[0]=='catalog' && go[1])
 					localStorage['cat-tab'] = go[1]
-				document.write('<iframe src="/'+go[0]+'" name="main" id="main" class="not-frame"></iframe>')
+				document.write('<iframe src="/'+go[0]+'" name="main" id="main" class="not-frame" loading="eager"></iframe>')
 			}
 		}
 		else
-			document.write('<iframe src="/index.html" name="main" id="main" class="not-frame"></iframe>')
+			document.write('<iframe src="/index.html" name="main" id="main" class="not-frame" loading="eager"></iframe>')
 		</script>
-		<iframe src="/live/overnullchlive.html" id="live" name="live" class="not-frame"></iframe>
+		<iframe src="/live/overnullchlive.html" id="live" name="live" class="not-frame" loading="eager"></iframe>
 	</body>
 </html>
