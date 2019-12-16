@@ -7,11 +7,13 @@ define('MAXLINKS', 50);
 define('MAXURLLENGTH', 300);
 define('MAXDESCLENGTH', 70);
 define('MINDESCLENGTH', 3);
-define('SALT', 'WEJFOWEIfjfwoiejWFEJ2398oew');
 define('TIMEOUT', 5*60); // timeout in seconds
 define('JSONFILE', 'live.json');
 
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Access-Control-Allow-Headers: X-PINGOTHER, Content-Type');
+header('Access-Control-Max-Age: 86400');
 
 if (!$_POST['url'] || !$_POST['description']) {
   retreat('no-data-provided');
