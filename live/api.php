@@ -11,6 +11,8 @@ define('SALT', 'WEJFOWEIfjfwoiejWFEJ2398oew');
 define('TIMEOUT', 5*60); // timeout in seconds
 define('JSONFILE', 'live.json');
 
+header('Access-Control-Allow-Origin: *');
+
 if (!$_POST['url'] || !$_POST['description']) {
   retreat('no-data-provided');
 }
