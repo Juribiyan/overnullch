@@ -1833,7 +1833,11 @@ var upForm = {
 				// library.deleteChan(upForm.candidate.id)
 				drafts.remove(upForm.candidate.id)
 				delete this.candidate.ball
-				let sect = (this.candidate.section && this.candidate.section === 'default') ? 'default' : 'custom'
+				if (res.moveto) {
+					// console.log(`Gotta move it to ${res.moveto}`);
+					this.candidate.section = res.moveto
+				}
+				let sect = this.candidate.section
 				let added = library.addChan(this.candidate, sect, true)
 				libchan.load(added)
 				console.log(upForm.candidate.id, this.candidate, sect);
