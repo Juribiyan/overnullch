@@ -84,17 +84,10 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
 
   $input['section'] = ((isset($input['offline']) ? $input['offline'] : false) ? 'offline' 
                       : ((isset($input['default']) ? $input['default'] : false) ? 'default'
-                      : ($offline ? 'offline'
-                      : ($default ? 'default' : 'custom'
-                      ))));
+                      : 'custom'));
 
   if ($_POST['action'] == 'edit') {
-    if ($input['offline'] != $offline) {
-        $input['prev_section'] = $offline ? 'offline' : ($default ? 'default' : 'custom');
-    }
-    elseif ($input['default'] != $default) {
-        $input['prev_section'] = $default ? 'default' : ($offline ? 'offline' : 'custom');
-    }
+    $input['prev_section'] = $offline ? 'offline' : ($default ? 'default' : 'custom');
   }
   
   $integrity_errors = check_integrity($input, $_POST['action']);
