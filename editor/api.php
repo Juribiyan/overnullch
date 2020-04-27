@@ -82,14 +82,32 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
 
   $input['passhash'] = $hash;
 
-  $input['section'] = ((isset($input['offline']) ? $input['offline'] : false) ? 'offline' 
-                      : ((isset($input['default']) ? $input['default'] : false) ? 'default'
-                      : ($offline ? 'offline'
-                      : ($default ? 'default' : 'custom'
-                      ))));
+  if (isset($input['offline'])) {
+    if ($input['offline']) {
+      $input['section'] = 'offline';
+    }
+  } elseif (isset($input['default'])) {
+    if ($input['default']) {
+      $input['section'] = 'default';
+    }
+  } else {
+    if ($offline) {
+      $input['section'] = 'offline';
+    } elseif ($default) {
+      $input['section'] = 'default';
+    } else {
+      $input['section'] = 'custom';
+    }
+  }
 
   if ($_POST['action'] == 'edit') {
-    $input['prev_section'] = $offline ? 'offline' : ($default ? 'default' : 'custom');
+    if ($offline) {
+      $input['prev_section'] = 'offline';
+    } elseif ($default) {
+      $input['prev_section'] = 'default';
+    } else {
+      $input['prev_section'] = 'custom';
+    }
   }
   
   $integrity_errors = check_integrity($input, $_POST['action']);
