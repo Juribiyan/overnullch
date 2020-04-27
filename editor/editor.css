@@ -1670,7 +1670,7 @@ textarea:active {
   height: calc(100% - 30px);
   z-index: 3;
   position: relative;
-  width: 210px;
+  width: 270px;
 }
 .expanded #chans {
   overflow: auto;

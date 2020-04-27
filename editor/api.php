@@ -82,11 +82,11 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
 
   $input['passhash'] = $hash;
 
-  $input['section'] = (isset($input['offline']) ? $input['offline'] : false) ? 'offline' 
-                      : (isset($input['default']) ? $input['default'] : false) ? 'default'
+  $input['section'] = ((isset($input['offline']) ? $input['offline'] : false) ? 'offline' 
+                      : ((isset($input['default']) ? $input['default'] : false) ? 'default'
                       : ($offline ? 'offline'
                       : ($default ? 'default' : 'custom'
-                      )));
+                      ))));
 
   if ($_POST['action'] == 'edit') {
     if ($input['offline'] != $offline) {
