@@ -105,7 +105,7 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
 
   $db_result = call_user_func($_POST['action'].'_chan', $input);
   if ($db_result) {
-    $res = array(action => $_POST['action'].'-success');
+    $res = array('action' => $_POST['action'].'-success');
     update_json();
     if ($input['prev_section']) {
       $res['moveto'] = $input['section'];
@@ -258,8 +258,8 @@ function check_validity($input, $f) {
     }
   }
   return array(
-    data => $output,
-    errors => $errs
+    'data' => $output,
+    'errors' => $errs
   );
 }
 function check_integrity($input, $act) {
@@ -410,8 +410,8 @@ function update_json() {
     }
   }
   $res = array(
-    version => time(),
-    chans => $chans
+    'version' => time(),
+    'chans' => $chans
   );
   $json = fopen($json_filename, 'w');
   fwrite($json, json_encode($res));
