@@ -494,7 +494,8 @@ var chans = {
 
       if (!(chansCache && chansCache.length)) {
         localStorage.removeItem('compiledCSS')
-        this.build(_.filter(_.filter(allChans, 'offline', null), 'included'))
+        let onlinechans = _.filter(allChans, 'offline', null)
+        this.build(_.filter(onlinechans, 'included'))
       }
       if (changed.length) {
         // Restyle chans if needed
