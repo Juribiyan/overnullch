@@ -1789,6 +1789,7 @@ textarea:active {
 }
 .show-default .sect-default,
 .show-custom .sect-custom,
+.show-offline .sect-offline,
 .show-drafts .sect-drafts {
   /* display: block; */
   height: 40px;

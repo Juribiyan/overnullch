@@ -508,6 +508,7 @@ header {
 }
 .tab-default .sect-default,
 .tab-custom .sect-custom,
+.tab-offline .sect-offline,
 .tab-drafts .sect-drafts {
   display: inline-block;
 }
@@ -575,7 +576,7 @@ header {
   color: rgb(24, 150, 24);
 }
 
-.offline-chan .cc-ball-wrap {
+.sect-offline .cc-ball-wrap {
   filter: gray;
   -webkit-filter: grayscale(1);
   filter: grayscale(1);

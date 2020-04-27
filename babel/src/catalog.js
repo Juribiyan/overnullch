@@ -225,7 +225,7 @@ var catalog = {
 		, wiki = (chan.wiki && chan.wiki.match(/https?:\/\//)) ? chan.wiki : (conf.wiki+(chan.wiki || name))
 		, search = `${chan.originalID || chan.id} ${name} ${chan.url.replace(/^https?:\/\//, '')} ${(chan.wiki || '').replace(/^https?:\/\//, '')}`
 		, ballSrc = chan.ball || `/chans/balls/${chan.section}/${chan.section == 'drafts' ? 'no-ball' : chan.id}.png?uid=${chan._id}${chan.ballv ? `&v=${chan.ballv}` : ''}`
-		return html`<div class="cat-chan sect-${chan.section} ${chan.included ? 'included-chan' : ''} ${chan.offline ? 'offline-chan' : ''}" data-search="${search.toLowerCase()}" id="cat_${chan.id}">
+		return html`<div class="cat-chan sect-${chan.section} ${chan.included ? 'included-chan' : ''}" data-search="${search.toLowerCase()}" id="cat_${chan.id}">
 			<div class="cc-ball-wrap" style="${makeGradient(chan.catbg)}">
 				<img src="${ballSrc}" class="cc-ball"></img>
 				<div class="channame-overlay">
