@@ -575,6 +575,12 @@ header {
   color: rgb(24, 150, 24);
 }
 
+.offline-chan .cc-ball-wrap {
+  filter: gray;
+  -webkit-filter: grayscale(1);
+  filter: grayscale(1);
+}
+
 .search-filter .cat-chan {
   display: none;
 }

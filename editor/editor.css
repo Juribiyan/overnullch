@@ -1724,7 +1724,7 @@ textarea:active {
   white-space: nowrap;
 }
 .expanded .collapsible-content {
-  width: 210px;
+  width: 270px;
 }
 #tabs {
   -webkit-box-shadow: inset 0 -1px 0 0px rgba(0, 0, 0, 0.15);

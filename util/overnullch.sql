@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS `over_chans` (
   `url` varchar(100) NOT NULL DEFAULT '',
   `default` tinyint(1) NOT NULL DEFAULT '0',
   `included` tinyint(1) NOT NULL DEFAULT '0',
+  `offline` tinyint(1) NOT NULL DEFAULT '0',
   `userboards` varchar(100) DEFAULT NULL,
   `userboards_catname` varchar(50) DEFAULT NULL,
   `userboards_system` varchar(20) DEFAULT NULL,

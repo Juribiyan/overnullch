@@ -1145,7 +1145,7 @@ var radio = {
 
 var library = {
 	build: function(chans, section) {
-		chans.forEach(chan => this.addChan(chan, section || (chan.default ? 'default' : 'custom')))
+		chans.forEach(chan => this.addChan(chan, section || (chan.offline ? 'offline' : (chan.default ? 'default' : 'custom'))))
 	},
 	buildChan: function(chan, section) {
 		section = section || chan.section
@@ -1203,7 +1203,8 @@ var libchan = {
 
 		this.current = chan
 
-		this.current.default = +(chan.section == 'default')
+		this.current.offline = +chan.offline
+		this.current.default = +chan.default
 		this.current.included = +chan.included
 
 		this.setMode('edit', chan.section)
@@ -1396,7 +1397,7 @@ var libchan = {
 			// options: admy
 			if (IS_ADMIN) {
 				let admy = {}
-				;['default', 'included'].forEach(prop => {
+				;['default', 'included', 'offline'].forEach(prop => {
 					admy[prop] = +$(jq`#${prop}`).prop('checked')
 				})
 				_.assign(chan, admy)

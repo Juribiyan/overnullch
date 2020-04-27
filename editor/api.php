@@ -49,7 +49,7 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
     $is_mod = true;
   }
 
-  $pre = $tc_db->GetAll('SELECT COUNT(1), `default`, `passhash` FROM `'.DB.'` WHERE `id`=?', array($_POST['id']));
+  $pre = $tc_db->GetAll('SELECT COUNT(1), `default`, `offline`, `passhash` FROM `'.DB.'` WHERE `id`=?', array($_POST['id']));
   if ($pre) {
     $pre = $pre[0];
   }
@@ -59,6 +59,7 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
 
   $chan_exists = $pre['COUNT(1)'];
   $default = $pre['default'];
+  $offline = $pre['offline'];
   $truehash = $pre['passhash'];
 
   if ($_POST['action'] == 'new') {
@@ -81,14 +82,19 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
 
   $input['passhash'] = $hash;
 
-  if (isset($input['default'])) {
-    $input['section'] = $input['default'] ? 'default' : 'custom';
-    if ($_POST['action'] == 'edit' && $input['default'] != $default) {
-      $input['prev_section'] = $default ? 'default' : 'custom';
+  $input['section'] = (isset($input['offline']) ? $input['offline'] : false) ? 'offline' 
+                      : (isset($input['default']) ? $input['default'] : false) ? 'default'
+                      : ($offline ? 'offline'
+                      : ($default ? 'default' : 'custom'
+                      )));
+
+  if ($_POST['action'] == 'edit') {
+    if ($input['offline'] != $offline) {
+        $input['prev_section'] = $offline ? 'offline' : ($default ? 'default' : 'custom');
     }
-  }
-  else {
-    $input['section'] = $default ? 'default' : 'custom';
+    elseif ($input['default'] != $default) {
+        $input['prev_section'] = $default ? 'default' : ($offline ? 'offline' : 'custom');
+    }
   }
   
   $integrity_errors = check_integrity($input, $_POST['action']);
@@ -239,7 +245,7 @@ function check_validity($input, $f) {
   if (isset($input['password'])) {
     $output['password'] = $input['password'];
   }
-  $admy = array('default', 'included');
+  $admy = array('default', 'included', 'offline');
   foreach($admy as &$ap) {
     if (isset($input[$ap])) {
       if (!$is_admin) {
@@ -263,7 +269,7 @@ function check_integrity($input, $act) {
       $errs []= array(field => $arf, msg => 'missing');
   }
   $required = array('name', 'url', 'boards', 'ball', 'offset', 'catbg');
-  $optional = array('userboards', 'prefix', 'postfix', 'wiki', 'radio', 'colors', 'advanced_less', 'default', 'included', 'userboards_catname', 'userboards_system');
+  $optional = array('userboards', 'prefix', 'postfix', 'wiki', 'radio', 'colors', 'advanced_less', 'default', 'included', 'offline', 'userboards_catname', 'userboards_system');
   $all = array_merge_recursive($required, $optional);
   if ($act == 'add') {
     foreach ($required as &$rf) {
@@ -300,7 +306,7 @@ function check_uniqueness_forall($input, $act) {
 //basic actions
 function new_chan($input) {
   global $tc_db;
-  $fields = array('id', 'passhash', 'name', 'url', 'boards', 'offset', 'catbg', 'userboards', 'prefix', 'postfix', 'wiki', 'radio', 'colors', 'advanced_less', 'default', 'included', 'userboards_catname', 'userboards_system');
+  $fields = array('id', 'passhash', 'name', 'url', 'boards', 'offset', 'catbg', 'userboards', 'prefix', 'postfix', 'wiki', 'radio', 'colors', 'advanced_less', 'default', 'included', 'offline', 'userboards_catname', 'userboards_system');
   foreach($fields as &$f) {
     if (array_key_exists($f, $input)) {
       $keys []= '`'.$f.'`';
@@ -315,7 +321,7 @@ function new_chan($input) {
 function edit_chan($input) {
   global $tc_db;
   $has_ball = false;
-  $fields = array('name', 'url', 'boards', 'offset', 'catbg', 'userboards', 'prefix', 'postfix', 'wiki', 'radio', 'colors', 'advanced_less', 'default', 'included', 'ball', 'userboards_catname', 'userboards_system');
+  $fields = array('name', 'url', 'boards', 'offset', 'catbg', 'userboards', 'prefix', 'postfix', 'wiki', 'radio', 'colors', 'advanced_less', 'default', 'included', 'offline', 'ball', 'userboards_catname', 'userboards_system');
   foreach($fields as &$f) {
     if (array_key_exists($f, $input)) {
       if ($f == 'ball') {
@@ -370,11 +376,11 @@ function save_file($input) {
 function update_json() {
   global $tc_db;
   $json_filename = ROOTDIR.'chans/chans.json';
-  $chans = $tc_db->GetAll("SELECT `_id`, `id`, `default`, `name`, `url`, `included`, `boards`, `userboards`, `catbg`, `wiki`, `offset`, `prefix`, `postfix`, `radio`, `colors`, `advanced_less`, `ballv`, `userboards_catname`, `userboards_system` FROM `".DB."` ORDER BY `_id` ASC");
+  $chans = $tc_db->GetAll("SELECT `_id`, `id`, `default`, `offline`, `name`, `url`, `included`, `boards`, `userboards`, `catbg`, `wiki`, `offset`, `prefix`, `postfix`, `radio`, `colors`, `advanced_less`, `ballv`, `userboards_catname`, `userboards_system` FROM `".DB."` ORDER BY `_id` ASC");
   $optional_props = array('_id', 'userboards', 'wiki', 'offset', 'prefix', 'postfix', 'radio', 'colors', 'advanced_less', 'userboards_catname', 'userboards_system', `ballv`);
   $paired_props = array('colors', 'catbg', 'offset');
   $json_props = array('boards', 'radio');
-  $privilege_props = array('included', 'default');
+  $privilege_props = array('included', 'default', 'offline');
   foreach ($chans as &$chan) {
     foreach ($privilege_props as &$sp) {
       if ($chan[$sp] == '1') {
