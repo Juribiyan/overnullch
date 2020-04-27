@@ -1261,8 +1261,9 @@ var libchan = {
 			radio.reset()
 		}
 
-		$('#default').prop('checked', chan.section === 'default')
+		$('#default').prop('checked', !!chan.default)
 		$('#included').prop('checked', !!chan.included)
+		$('#offline').prop('checked', !!chan.offline)
 
 		this.rinse()
 	},
