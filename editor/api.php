@@ -142,7 +142,7 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
   if ($db_result) {
     $res = array('action' => $_POST['action'].'-success');
     update_json();
-    if ($input['prev_section']) {
+    if ($input['prev_section'] || ($_POST['action'] == 'new')) {
       $res['moveto'] = $input['section'];
     }
     /*if ($_POST['action'] == 'new') {
