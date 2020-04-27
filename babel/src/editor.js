@@ -1270,7 +1270,7 @@ var libchan = {
 		integrity: {
 			required: ['id', 'name', 'url', 'boards', 'ball', 'offset', 'catbg'],
 			optional: ['userboards', 'prefix', 'postfix', 'wiki', 'radio', 'colors', 'advanced_less', 'userboards_catname', 'userboards_system'],
-			adminOnly: ['default', 'included']
+			adminOnly: ['default', 'included', 'offline']
 		},
 		specialComps: {
 			pairs: ['catbg', 'offset', 'colors'],
