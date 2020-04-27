@@ -82,10 +82,27 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
 
   $input['passhash'] = $hash;
 
-  if (isset($input['offline']) && $input['offline']) {
-    $input['section'] = 'offline';
-  } elseif (isset($input['default']) && $input['default']) {
-    $input['section'] = 'default';
+  if (isset($input['offline'])) {
+    if ($input['offline']) {
+      $input['section'] = 'offline';
+    } else {
+      if (isset($input['default'])) {
+        if ($input['default']) {
+          $input['section'] = 'default';
+        } else {
+          $input['section'] = 'custom';
+        }
+    }
+  } elseif (isset($input['default'])) {
+    if ($input['default']) {
+      $input['section'] = 'default';
+    } else {
+      $input['section'] = 'custom';
+    }
+  } elseif (isset($input['custom'])) {
+    if ($input['custom']) {
+      $input['section'] = 'custom';
+    }
   } else {
     if ($offline) {
       $input['section'] = 'offline';
@@ -94,7 +111,6 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
     } else {
       $input['section'] = 'custom';
     }
-  }
 
   if ($_POST['action'] == 'edit') {
     if ($offline) {
