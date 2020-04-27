@@ -107,7 +107,7 @@ var settings = {
     }
     if (prop === 'useAnonym') {
       $ch.find('a[data-href]').each(function() {
-        let href = (on ? 'http://anonym.to?' : '') + $(this).data('href')
+        let href = (on ? 'https://anonym.to?' : '') + $(this).data('href')
         $(this).attr('href', href)
       })
     }
@@ -201,10 +201,10 @@ var chans = {
       {
         "name": "",
         "boards": [
-          {
+          /*{
             "desc": "Метадоска",
             "dir": "meta"
-          },
+          },*/
           {
             "desc": "Каталог сайтов",
             "dir": "catalog"
@@ -216,17 +216,17 @@ var chans = {
           {
             "desc": "Ballsmash",
             "dir": "mash"
-          }/*,
+          },
           {
             "desc": "Библиотека лупов",
             "dir": "loops"
-          }*/
+          }
         ]
       }
     ],
     // colors:["aaaaaa","bbbbbb"],
     name: "Овернульч",
-    url: 'http://0chan.one'
+    url: '//0chan.one'
   },
   build: function(chans) {
     this.model = chans
@@ -257,7 +257,7 @@ var chans = {
     _.defaults(chan, this.defaults)
 
     let hasBoards = (chan.boards && chan.boards.length) || chan.userboards
-    , url = chan.own ? `${chan.url}/index.html` : (((!chan.own && chan.useAnonym) ? 'http://anonym.to?' : '') + chan.url)
+    , url = chan.own ? `${chan.url}/index.html` : (((!chan.own && chan.useAnonym) ? 'https://anonym.to?' : '') + chan.url)
     , name = _.escape(chan.name)
     , htm = html`
     <div class="chan chan_${chan.id}${!chan.colors ? ' uncolorized' : ''}${chan.headOnly ? ' headOnly' : ''}${chan.showDirs ? ' showDirs' : ''}${!hasBoards ? ' no-boards' : ''}">
@@ -402,7 +402,7 @@ var chans = {
         let desc = _.escape(board.desc)
         , dir = _.escape(board.dir)
         , cleanURL = board.external ? board.url : (chan.url + chan.prefix + dir + chan.postfix)
-        , url = (chan.useAnonym ? 'http://anonym.to?' : '') + cleanURL
+        , url = (chan.useAnonym ? 'https://anonym.to?' : '') + cleanURL
         htm += html`
         <a target="main" href="${url}" class="board${board.external ? ' external' : ''}" data-href="${cleanURL}" data-dir="${dir}" onclick="handleLinkClick(this)">
           ${board.external ? '' : `<span class="board-dir">/${dir}/ - </span>`}<span class="board-name">${desc}</span>
@@ -473,7 +473,7 @@ var chans = {
               origin: sect.origin,
               version: sect.version
             })
-            let filter = sect.origin == 'drafts' ? {section: 'drafts'} : (i => (i.section == 'default' || i.section == 'custom'))
+            let filter = sect.origin == 'drafts' ? {section: 'drafts'} : (i => (i.section == 'default' || i.section == 'custom' || i.section == 'offline'))
             // Update all installed chans
             _.map(_.filter(chansCache, filter), 'id').forEach(id => {
               let ch = _.find(sect.chans, {id: id})
@@ -494,7 +494,7 @@ var chans = {
 
       if (!(chansCache && chansCache.length)) {
         localStorage.removeItem('compiledCSS')
-        this.build(_.filter(allChans, 'included'))
+        this.build(_.filter(_.filter(allChans, 'offline', null), 'included'))
       }
       if (changed.length) {
         // Restyle chans if needed
@@ -850,7 +850,7 @@ widgets.radio = {
     var $vm = $('<div class="volumeter">')
 
     var buildSVG = cls => {
-      var cns = tag => document.createElementNS("http://www.w3.org/2000/svg", tag)
+      var cns = tag => document.createElementNS("https://www.w3.org/2000/svg", tag)
 
       var svg = cns('svg')
       svg.setAttribute('width', width)
