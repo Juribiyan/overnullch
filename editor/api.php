@@ -82,9 +82,9 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
 
   $input['passhash'] = $hash;
 
-  if (isset($input['offline']) ? $input['offline'] : false) {
+  if (isset($input['offline']) && $input['offline']) {
     $input['section'] = 'offline';
-  } elseif (isset($input['default']) ? $input['default'] : false) {
+  } elseif (isset($input['default']) && $input['default']) {
     $input['section'] = 'default';
   } else {
     if ($offline) {
