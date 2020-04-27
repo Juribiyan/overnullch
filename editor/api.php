@@ -92,6 +92,7 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
         } else {
           $input['section'] = 'custom';
         }
+      }
     }
   } elseif (isset($input['default'])) {
     if ($input['default']) {
