@@ -336,7 +336,7 @@ const main = () => {
 		else lastTab = tabID
 		$lib.find('.tab').removeClass('selected')
 		$lib.find(`.tab[data-tab=${tabID}]`).addClass('selected')
-		$lib.removeClass('show-custom show-default show-drafts show-search').addClass(`show-${tabID}`)
+		$lib.removeClass('show-custom show-offline show-default show-drafts show-search').addClass(`show-${tabID}`)
 		f && $('#searchbox').focus()
 	})
 
