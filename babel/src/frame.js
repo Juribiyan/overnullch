@@ -656,7 +656,20 @@ var normalizeUbrds = {
     delete brd.threads
     delete brd.unique_posters
     return brd
-  })   
+  }),
+  'jschan': data => data.boards.map(brd => {
+    brd.dir = brd.uri
+    brd.desc = brd.title
+    delete brd.subtitle
+    delete brd.path
+    delete brd.postsPerHour
+    delete brd.totalPosts
+    delete brd.uniqueUsers
+    delete brd.nsfw
+    delete brd.tags
+    delete brd.lastPostTimestamp
+  })
+
 }
 
 function LSfetchJSON(key) {
