@@ -547,127 +547,42 @@ var normalizeUbrds = {
     if (brd.name) {
       brd.dir = brd.name
     }
-    delete brd.postcount
-    delete brd.name
     return brd
   }),
   '0chan': data => data.boards.map(brd => {
     brd.desc = brd.name
-    delete brd.name
     return brd
   }),
   'meguca': data => data.map(brd => {
     brd.dir = brd.id
     brd.desc = brd.title
-    delete brd.title
-    delete brd.id
     return brd
   }),
   'lynxchan': data => data.boards.map(brd => {
     brd.dir = brd.boardUri
     brd.desc = brd.boardName
-    delete brd.boardDescription
-    delete brd.postsPerHour
-    delete brd.lastPostId
-    delete brd.uniqueIps
-    delete brd.inactive
-    delete brd.tags
     return brd
   }),
 // vichan will work only if board owner enabled vichan's/infinity's/openib's API support
   'vichan': data => data.map(brd => {
     brd.dir = brd.uri
     brd.desc = brd.title
-    delete brd.uri
-    delete brd.title
-    if (brd.subtitle) {
-      delete brd.subtitle
-    }
-    if (brd.indexed) {
-      delete brd.indexed
-    }
-    if (brd.sfw) {
-      delete brd.sfw
-    }
-    if (brd.posts_total) {
-      delete brd.posts_total
-    }
-    if (brd.time) {
-      delete brd.time
-    }
-    if (brd.weight) {
-      delete brd.weight
-    }
-    if (brd.locale) {
-      delete brd.locale
-    }
-    if (brd.tags) {
-      delete brd.tags
-    }
-    if (brd.max) {
-      delete brd.max
-    }
-    if (brd.active) {
-      delete brd.active
-    }
-    if (brd.pph) {
-      delete brd.pph
-    }
-    if (brd.ppd) {
-      delete brd.ppd
-    }
-    if (brd.pph_average) {
-      delete brd.pph_average
-    }
     return brd
   }),
   '4chan': data => data.boards.map(brd => {
     brd.dir = brd.board
     brd.desc = brd.title
-    delete brd.board
-    delete brd.title
-    delete brd.ws_board
-    delete brd.per_page
-    delete brd.pages
-    delete brd.max_filesize
-    delete brd.max_webm_filesize
-    delete brd.max_comment_chars
-    delete brd.max_webm_duration
-    delete brd.bump_limit
-    delete brd.image_limit
-    delete brd.cooldowns
-    delete brd.meta_description
-    delete brd.is_archived
     return brd
   }),
   'sosach': data => data.boards.map(brd => {
     brd.dir = brd.id
     brd.desc = brd.name
-    delete brd.id
-    delete brd.name
-    delete brd.bump_limit
-    delete brd.category
-    delete brd.default_name
-    delete brd.enable_names
-    delete brd.enable_sage
-    delete brd.info
-    delete brd.last_num
-    delete brd.speed
-    delete brd.threads
-    delete brd.unique_posters
     return brd
   }),
   'jschan': data => data.boards.map(brd => {
     brd.dir = brd.uri
     brd.desc = brd.title
-    delete brd.subtitle
-    delete brd.path
-    delete brd.postsPerHour
-    delete brd.totalPosts
-    delete brd.uniqueUsers
-    delete brd.nsfw
-    delete brd.tags
-    delete brd.lastPostTimestamp
+    return brd
   })
 
 }
