@@ -160,6 +160,8 @@ if ( !$url ) {
 } else {
   $ch = curl_init( $url );
   
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+  
   if ($proxy) 
     curl_setopt($ch, CURLOPT_PROXY, $proxy); 
 
