@@ -28,7 +28,7 @@ if($_GET['act'] == 'captcha') {
   $continue_vote = true;
 }
 
-if($continue_vote || $_GET['act'] == 'vote') {
+if(@$continue_vote || $_GET['act'] == 'vote') {
   $now = microtime(true);
   if(isset($_SESSION['last_vote']) && $now - $_SESSION['last_vote'] < MINIMUM_TIMEGAP)
     $_SESSION['human'] = false;
@@ -36,7 +36,7 @@ if($continue_vote || $_GET['act'] == 'vote') {
   if(isset($_SESSION['total_votes']) && $_SESSION['total_votes'] >= MAX_VOTES)
     $_SESSION['human'] = false;
 
-  if(!$_SESSION['human']) {
+  if(!@$_SESSION['human']) {
     $_SESSION['interrupted_vote'] = $_POST['v'];
     retreat('enter_captcha');
   }  
@@ -44,7 +44,7 @@ if($continue_vote || $_GET['act'] == 'vote') {
   if(!isset($_SESSION['challengers']))
     retreat('force_reload');
 
-  $v = ($continue_vote && isset($_SESSION['interrupted_vote'])) ? $_SESSION['interrupted_vote'] : $_POST['v'];
+  $v = (@$continue_vote && isset($_SESSION['interrupted_vote'])) ? @$_SESSION['interrupted_vote'] : @$_POST['v'];
 
   unset($_SESSION['interrupted_vote']);
 
@@ -95,7 +95,7 @@ if(!empty($ret))
 
 function get_rates() {
   global $tc_db;
-  $rates = $tc_db->GetAll('SELECT `id`, `rating` FROM `'.CHANS_DB.'`');
+  $rates = $tc_db->GetAll('SELECT `id`, `rating` FROM `'.CHANS_DB.'` WHERE `offline`=0');
   return $rates;
 }
 
@@ -106,9 +106,9 @@ function get_challengers() {
     return $_SESSION['challengers'];
   else {
     //make sure not to send previous challengers
-    $cond = "";
+    $cond = " WHERE `offline`='0'";
     if(isset($_SESSION['prev'])) 
-      $cond = " WHERE `_id` != ".$_SESSION['prev'][0]['_id']." AND `_id` != ".$_SESSION['prev'][1]['_id'];
+      $cond .= " AND `_id` != ".$_SESSION['prev'][0]['_id']." AND `_id` != ".$_SESSION['prev'][1]['_id'];
     $pair = $tc_db->GetAll("SELECT `id`, `_id` FROM `".CHANS_DB."`".$cond." ORDER BY RAND() LIMIT 2");
     $_SESSION['challengers'] = $pair;
   }
@@ -130,19 +130,19 @@ function loss($score, $expected, $k = CONSTANT_K) {
 
 function retreat($errmsg) {
   exit(json_encode(array(
-    error => $errmsg
+    "error" => $errmsg
   )));
 }
 
 function advance($data) {
   exit(json_encode(array(
-    error => false,
-    data => $data
+    "error" => false,
+    "data" => $data
   )));
 }
 
 function debug($data) {
   exit(json_encode(array(
-    debug => $data
+    "debug" => $data
   )));
 }

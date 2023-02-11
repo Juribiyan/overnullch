@@ -65,8 +65,8 @@ var chanTop = {
 		, addRemove = isInstalled ? 'Удалить' : 'Добавить'
 		, name = _.escape(chan.name)
 		, wiki = (chan.wiki && chan.wiki.match(/https?:\/\//)) ? chan.wiki : (conf.wiki+(chan.wiki || name))
-		return html`<div class="ct-chan">
-			<img src="/chans/balls/${chan.section}/${chan.id}.png?uid=${chan._id}${chan.ballv ? `&v=${chan.ballv}` : ''}" alt="${name}" class="chan-avatar">
+		return `<div class="ct-chan">
+			<img src="/chans/balls/${chan.section}/${chan.id}.png" alt="${name}" class="chan-avatar">
 			<div class="catc-addremove adder-remover" title="${addRemove}">${xPlus}</div>
 			<a href="${_.escape(chan.url)}" target="_blank" class="chan-name"><span>${name}</span></a>
 			<div class="chan-rating">${chan.rating}</div>
@@ -212,9 +212,9 @@ var Masher = {
 		, addRemove = isInstalled ? 'Удалить' : 'Добавить'
 		, name = _.escape(chan.name)
 		, wiki = (chan.wiki && chan.wiki.match(/https?:\/\//)) ? chan.wiki : (conf.wiki+(chan.wiki || name))
-		return html`<div class="catalog-chan">
+		return `<div class="catalog-chan">
 		  <div class="cc-ball-wrap" id="ch_${chan.id}">
-		    <img src="/chans/balls/${chan.section}/${chan.id}.png?uid=${chan._id}${chan.ballv ? `&v=${chan.ballv}` : ''}" alt="${name}" class="cc-ball">
+		    <img src="/chans/balls/${chan.section}/${chan.id}.png" alt="${name}" class="cc-ball">
 		    <a href="${_.escape(chan.url)}" target="_blank" class="channame-overlay">${name}</a>
 		    <div class="chan-options co-add adder-remover" title="${addRemove}">${xPlus}</div>
 		    <a href="${wiki}" target="_blank" class="chan-options co-info" title="Информация">i</a>
