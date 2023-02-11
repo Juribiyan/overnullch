@@ -114,7 +114,7 @@ function switchTab(tab) {
 
 var errorBoy = {
 	pushError: function(msg) {
-		$('#error-wrapper').append(html`<div class="errmsgbox" onclick="this.remove()">
+		$('#error-wrapper').append(/*html*/`<div class="errmsgbox" onclick="this.remove()">
 			<svg id="close-errmsg" class="icon"><use xlink:href="#i-x"></use></svg>
 			<p class="error-message">${_.escape(msg)}</p>
 		</div>`)
@@ -173,8 +173,8 @@ var list = {
 	},
 	buildChan: function(chan) {
 		let name = _.escape(chan.name)
-		, ballSrc = chan.ball || html`/chans/balls/${chan.section}/${chan.section == 'drafts' ? 'no-ball' : chan.id}.png?uid=${chan._id}${chan.ballv ? `&v=${chan.ballv}` : ''}`
-		return html`<li class="list-chan" id="installed_${chan.id}" data-id="${chan.id}">
+		, ballSrc = chan.ball || /*html*/`/chans/balls/${chan.section}/${chan.section == 'drafts' ? 'no-ball' : chan.id}.png?uid=${chan._id}${chan.ballv ? `&v=${chan.ballv}` : ''}`
+		return /*html*/`<li class="list-chan" id="installed_${chan.id}" data-id="${chan.id}">
 			<img src="${ballSrc}" class="list-chanball">
 			<div class="dragger"><svg class="icon"><use xlink:href="#i-drag"></use></div>
 			<div class="list-chan-title">${name || 'Без имени'}</div>
@@ -225,7 +225,7 @@ var catalog = {
 		, wiki = (chan.wiki && chan.wiki.match(/https?:\/\//)) ? chan.wiki : (conf.wiki+(chan.wiki || name))
 		, search = `${chan.originalID || chan.id} ${name} ${chan.url.replace(/^https?:\/\//, '')} ${(chan.wiki || '').replace(/^https?:\/\//, '')}`
 		, ballSrc = chan.ball || `/chans/balls/${chan.section}/${chan.section == 'drafts' ? 'no-ball' : chan.id}.png?uid=${chan._id}${chan.ballv ? `&v=${chan.ballv}` : ''}`
-		return html`<div class="cat-chan sect-${chan.section} ${chan.included ? 'included-chan' : ''}" data-search="${search.toLowerCase()}" id="cat_${chan.id}">
+		return /*html*/`<div class="cat-chan sect-${chan.section} ${chan.included ? 'included-chan' : ''}" data-search="${search.toLowerCase()}" id="cat_${chan.id}">
 			<div class="cc-ball-wrap" style="${makeGradient(chan.catbg)}">
 				<img src="${ballSrc}" class="cc-ball"></img>
 				<div class="channame-overlay">

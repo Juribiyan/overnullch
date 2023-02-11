@@ -1,18 +1,23 @@
 {
   "name": "overnullch-build",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Best overchan in the world",
-  "main": "index.js",
   "scripts": {
-    "build": "cross-env BABEL_ENV=production babel src --out-dir ../lib/es5 --source-maps"
+    "build": "babel src/catalog.js --out-dir ../lib/es5 --source-maps && babel src/chantop.js --out-dir ../lib/es5 --source-maps && babel src/editor.js --out-dir ../lib/es5 --source-maps && babel src/frame.js --out-dir ../lib/es5 --source-maps && babel src/live.js --out-dir ../lib/es5 --source-maps"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "babel-preset-minify"
+    ],
+    "comments": false
   },
   "author": "Juribiyan",
   "license": "ISC",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-html-template": "^1.0.1",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-minify": "^0.4.1",
-    "cross-env": "^5.1.5"
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "babel-preset-minify": "^0.5.2"
   }
 }
