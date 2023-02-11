@@ -1,0 +1,247 @@
+html {
+	background: #252525;
+}
+.popit {
+	background: url(/doodles/popit/popit.png);
+	width: 100%;
+	height: 100%;
+	padding-bottom: calc(1173 / 794 * 100%);
+	background-size: 200%;
+	box-shadow: inset 0 0 0 2px #252525; /* to prevent background bleed on edges in shitfox */
+}
+.popit-container {
+	position: relative;
+	max-width: 90%;
+	width: 300px;
+	display: inline-block;
+}
+.popit-cell {
+	position: absolute;
+	width: calc(100 / 794 * 100%);
+	height: calc(100 / 1173 * 100%);
+	background: url(popit.png);
+	background-size: calc(794 / 100 * 200%);
+	cursor: pointer;
+}
+.popit input {
+	display: none;
+}
+.popit-cell::before {
+	content: "";
+	width: 100%;
+	height: 100%;
+	background: #ffffff;
+	box-shadow: 0 0 8px 12px white;
+	position: absolute;
+	border-radius: 100%;
+	opacity: 0;
+	transition: opacity .3s;
+	left: 0;
+	top: 0;
+}
+.popit-cell:hover::before {
+	opacity: .15;
+}
+#label_0 {
+	left:20.098236775818638%;
+	top: 3.9215686274509802%;
+	background-position-x: 10.718787081004256%;
+	background-position-y: 4.287031743643749%;
+}
+input:checked+#label_0 { background-position-x: 64.05076441097906% }
+#label_1 {
+	left:34.40302267002519%;
+	top: 3.9215686274509802%;
+	background-position-x: 18.347812251203926%;
+	background-position-y: 4.287031743643749%;
+}
+input:checked+#label_1 { background-position-x: 71.67978958117874% }
+#label_2 {
+	left:48.70780856423174%;
+	top: 3.9215686274509802%;
+	background-position-x: 25.976837421403598%;
+	background-position-y: 4.287031743643749%;
+}
+input:checked+#label_2 { background-position-x: 79.30881475137842% }
+#label_3 {
+	left:63.01259445843827%;
+	top: 3.9215686274509802%;
+	background-position-x: 33.60586259160326%;
+	background-position-y: 4.287031743643749%;
+}
+input:checked+#label_3 { background-position-x: 86.93783992157807% }
+#label_4 {
+	left:5.793450881612091%;
+	top: 13.843137254901961%;
+	background-position-x: 3.089761910804586%;
+	background-position-y: 15.133222055062435%;
+}
+input:checked+#label_4 { background-position-x: 56.421739240779395% }
+#label_5 {
+	left:63.01259445843827%;
+	top: 13.843137254901961%;
+	background-position-x: 33.60586259160326%;
+	background-position-y: 15.133222055062435%;
+}
+input:checked+#label_5 { background-position-x: 86.93783992157807% }
+#label_6 {
+	left:77.31738035264483%;
+	top: 13.843137254901961%;
+	background-position-x: 41.23488776180294%;
+	background-position-y: 15.133222055062435%;
+}
+input:checked+#label_6 { background-position-x: 94.56686509177774% }
+#label_7 {
+	left:5.793450881612091%;
+	top: 23.764705882352942%;
+	background-position-x: 3.089761910804586%;
+	background-position-y: 25.97941236648112%;
+}
+input:checked+#label_7 { background-position-x: 56.421739240779395% }
+#label_8 {
+	left:55.860201511335006%;
+	top: 23.764705882352942%;
+	background-position-x: 29.79135000650343%;
+	background-position-y: 25.97941236648112%;
+}
+input:checked+#label_8 { background-position-x: 83.12332733647824% }
+#label_9 {
+	left:77.31738035264483%;
+	top: 23.764705882352942%;
+	background-position-x: 41.23488776180294%;
+	background-position-y: 25.97941236648112%;
+}
+input:checked+#label_9 { background-position-x: 94.56686509177774% }
+#label_10 {
+	left:5.793450881612091%;
+	top: 33.68627450980392%;
+	background-position-x: 3.089761910804586%;
+	background-position-y: 36.8256026778998%;
+}
+input:checked+#label_10 { background-position-x: 56.421739240779395% }
+#label_11 {
+	left:48.70780856423174%;
+	top: 33.68627450980392%;
+	background-position-x: 25.976837421403598%;
+	background-position-y: 36.8256026778998%;
+}
+input:checked+#label_11 { background-position-x: 79.30881475137842% }
+#label_12 {
+	left:77.31738035264483%;
+	top: 33.68627450980392%;
+	background-position-x: 41.23488776180294%;
+	background-position-y: 36.8256026778998%;
+}
+input:checked+#label_12 { background-position-x: 94.56686509177774% }
+#label_13 {
+	left:5.793450881612091%;
+	top: 43.607843137254896%;
+	background-position-x: 3.089761910804586%;
+	background-position-y: 47.67179298931848%;
+}
+input:checked+#label_13 { background-position-x: 56.421739240779395% }
+#label_14 {
+	left:41.55541561712846%;
+	top: 43.607843137254896%;
+	background-position-x: 22.16232483630376%;
+	background-position-y: 47.67179298931848%;
+}
+input:checked+#label_14 { background-position-x: 75.49430216627857% }
+#label_15 {
+	left:77.31738035264483%;
+	top: 43.607843137254896%;
+	background-position-x: 41.23488776180294%;
+	background-position-y: 47.67179298931848%;
+}
+input:checked+#label_15 { background-position-x: 94.56686509177774% }
+#label_16 {
+	left:5.793450881612091%;
+	top: 53.529411764705884%;
+	background-position-x: 3.089761910804586%;
+	background-position-y: 58.51798330073718%;
+}
+input:checked+#label_16 { background-position-x: 56.421739240779395% }
+#label_17 {
+	left:34.40302267002519%;
+	top: 53.529411764705884%;
+	background-position-x: 18.347812251203926%;
+	background-position-y: 58.51798330073718%;
+}
+input:checked+#label_17 { background-position-x: 71.67978958117874% }
+#label_18 {
+	left:77.31738035264483%;
+	top: 53.529411764705884%;
+	background-position-x: 41.23488776180294%;
+	background-position-y: 58.51798330073718%;
+}
+input:checked+#label_18 { background-position-x: 94.56686509177774% }
+#label_19 {
+	left:5.793450881612091%;
+	top: 63.450980392156865%;
+	background-position-x: 3.089761910804586%;
+	background-position-y: 69.36417361215585%;
+}
+input:checked+#label_19 { background-position-x: 56.421739240779395% }
+#label_20 {
+	left:27.250629722921914%;
+	top: 63.450980392156865%;
+	background-position-x: 14.533299666104092%;
+	background-position-y: 69.36417361215585%;
+}
+input:checked+#label_20 { background-position-x: 67.8652769960789% }
+#label_21 {
+	left:77.31738035264483%;
+	top: 63.450980392156865%;
+	background-position-x: 41.23488776180294%;
+	background-position-y: 69.36417361215585%;
+}
+input:checked+#label_21 { background-position-x: 94.56686509177774% }
+#label_22 {
+	left:5.793450881612091%;
+	top: 73.37254901960783%;
+	background-position-x: 3.089761910804586%;
+	background-position-y: 80.21036392357453%;
+}
+input:checked+#label_22 { background-position-x: 56.421739240779395% }
+#label_23 {
+	left:20.098236775818638%;
+	top: 73.37254901960783%;
+	background-position-x: 10.718787081004256%;
+	background-position-y: 80.21036392357453%;
+}
+input:checked+#label_23 { background-position-x: 64.05076441097906% }
+#label_24 {
+	left:77.31738035264483%;
+	top: 73.37254901960783%;
+	background-position-x: 41.23488776180294%;
+	background-position-y: 80.21036392357453%;
+}
+input:checked+#label_24 { background-position-x: 94.56686509177774% }
+#label_25 {
+	left:20.098236775818638%;
+	top: 83.29411764705881%;
+	background-position-x: 10.718787081004256%;
+	background-position-y: 91.05655423499321%;
+}
+input:checked+#label_25 { background-position-x: 64.05076441097906% }
+#label_26 {
+	left:34.40302267002519%;
+	top: 83.29411764705881%;
+	background-position-x: 18.347812251203926%;
+	background-position-y: 91.05655423499321%;
+}
+input:checked+#label_26 { background-position-x: 71.67978958117874% }
+#label_27 {
+	left:48.70780856423174%;
+	top: 83.29411764705881%;
+	background-position-x: 25.976837421403598%;
+	background-position-y: 91.05655423499321%;
+}
+input:checked+#label_27 { background-position-x: 79.30881475137842% }
+#label_28 {
+	left:63.01259445843827%;
+	top: 83.29411764705881%;
+	background-position-x: 33.60586259160326%;
+	background-position-y: 91.05655423499321%;
+}
+input:checked+#label_28 { background-position-x: 86.93783992157807% }

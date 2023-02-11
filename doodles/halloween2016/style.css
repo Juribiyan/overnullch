@@ -251,3 +251,9 @@ body {
 .first-line {
   cursor: pointer;
 }
+.payment a {
+  color: #efcf22;
+}
+.payment a:hover {
+  color: #efa122;
+}

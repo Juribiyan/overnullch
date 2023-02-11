@@ -1,0 +1,32 @@
+@-webkit-keyframes lightning {
+  0%, 100% {
+
+  }
+  50% {
+    background-color: white;
+    -webkit-filter: invert(1);
+            filter: invert(1);
+  }
+}
+@-o-keyframes lightning {
+  0%, 100% {
+
+  }
+  50% {
+    background-color: white;
+    filter: invert(1);
+  }
+}
+@keyframes lightning {
+  0%, 100% {
+
+  }
+  50% {
+    background-color: white;
+    -webkit-filter: invert(1);
+            filter: invert(1);
+  }
+}
+html {
+  min-height: 100%;
+}

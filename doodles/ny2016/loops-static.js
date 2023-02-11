@@ -1,5 +1,5 @@
 var defaultPattern = "G|GG|GGG|GGGG|GGGGG|GGGGGG|GGGG|GGGGG|GGGGGG|GGGGGGG|GGGGGGGG|GGGGGG|GGGGGGG|GGGGGGGG|GGGGGGGGG|GGGGGGGGGG|GGGGGGGGGGG|gg|gg";
-var urlprefix = "/loops/loops/";
+var urlprefix = "loops/loops/";
 var fileFormat = (function() {
 	var testAudio  = document.createElement("audio");
 	return (typeof testAudio.canPlayType === "function" && testAudio.canPlayType("audio/ogg") !== "")

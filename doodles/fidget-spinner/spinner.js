@@ -2,6 +2,7 @@ const spinner = {
   init: function() {
     this.loadChans()
     .then(() => {
+      console.log(this.chans)
       this.putChans()
       $('.spinner-container').on('dblclick', this.putChans.bind(this))
     }, err => console.error(err))
@@ -46,7 +47,7 @@ const spinner = {
   },
   indexes: [],
   putChan: (chan, cell) => {
-    let section = chan.default ? 'default' : 'custom'
+    let section = chan.offline ? 'offline' : (chan.default ? 'default' : 'custom')
     , ballSrc = `/chans/balls/${section}/${chan.id}.png?uid=${chan._id}${chan.ballv ? `&v=${chan.ballv}` : ''}`
     $(`#bc-${cell+1} img`)
     .attr('src', ballSrc)

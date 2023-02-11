@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/css/roboto.css">
+	<link rel="stylesheet" href="/css/roboto-light.css">
+	<link rel="stylesheet" href="/css/over-index.css?v=19.02.17">
+	<link rel="stylesheet" href="/doodles/hirudotron/style.css">
+	<link rel="stylesheet" href="hirudovirus.css">
+	<title>Овернульч</title>
+	<script src="/lib/javascript/jquery-3.6.3.min.js"></script>
+	<script src="/doodles/fidget-spinner/propeller.min.js"></script>
+	<script src="/lib/javascript/over-index.js?v=15.07.21"></script>
+	<script src="gsap.min.js"></script>
+	<script src="hirudovirus-src.js"></script>
+</head>
+<body>
+	<div id="space"></div>
+		<div id="centered">
+			<h1><span>Овер&shy;нульч</h1>
+			<div class="spinner-container fade-in faded">
+				<img id="hirudotron" src="/doodles/hirudovirus/hirudovirus.png" alt="">
+			</div>
+			<h2><i>Living One Last Day In These Fading Years</i></h2>
+			<a href="catalog" class="b-button bb-primary">Каталог сайтов</a><br>
+			<a target="_blank" href="https://0chan.one/loops/" class="b-button">Лупы</a>
+			<a id="show_doodles" href="#" class="b-button">Дудлы</a><br>
+			<div class="relative-container">
+				<a target="_blank" href="https://gitgud.io/ubhelbr/overnullch/raw/master/util/overnullch-links.user.js" class="download-button">
+					<span class="db-big">Установить юзерскрипт</span><br>
+					<span class="db-mid">реализующий синхронизацию ссылок</span><br>
+					<span class="db-small">для Greasemonkey / Violentmonkey и под.</span>
+					<span class="script-is-installed">
+					<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="16px" height="16px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd; fill: currentColor;" viewBox="0 0 28960 28960">
+					  <polygon class="check-polygon" points="5128,13201 12472,20544 22173,2758 25341,4481 13322,26514 2567,15762 "/>
+					</svg>
+					Скрипт установлен
+					</span>
+				</a>
+				<a class="help-btn help-toggler" href="#why-script">?</a>
+			</div>
+		</div>
+		<div class="faq-container">
+			<div class="faq-window">
+					<div class="qa-entry q">
+					 <div class="qa-label">В:</div>
+					 <div class="qa-body">
+					 Зачем устанавливать юзерскрипт?
+					 </div>
+					</div>
+					<div class="qa-entry a">
+					 <div class="qa-label">О:</div>
+					 <div class="qa-body">
+					 Это сделает работу с&nbsp;приложением более удобной: обновление страницы не&nbsp;будет возвращать вас на&nbsp;главную страницу оверчана, как это обычно бывает. Можно будет делиться ссылками.
+					 </div>
+					</div>
+					<hr>
+					<div class="qa-entry q">
+					 <div class="qa-label">В:</div>
+					 <div class="qa-body">
+					 Почему для этого нужен юзерскрипт?
+					 </div>
+					</div>
+					<div class="qa-entry a">
+					 <div class="qa-label">О:</div>
+					 <div class="qa-body">
+					 В&nbsp;целях безопасности родительские фреймы не&nbsp;имеют доступа к&nbsp;фреймам, находящимся на&nbsp;внешних сайтах из-за <a href="https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%BE_%D0%BE%D0%B3%D1%80%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D0%BD%D0%B8%D1%8F_%D0%B4%D0%BE%D0%BC%D0%B5%D0%BD%D0%B0"><i>same origin policy</i></a>. Все, что делает скрипт, это &laquo;сдает&raquo; текущий URL овернульчу.
+					 </div>
+					</div>
+					<hr>
+					<div class="qa-entry q">
+					 <div class="qa-label">В:</div>
+					 <div class="qa-body">
+					 Получается, это слежка за&nbsp;мной?
+					 </div>
+					</div>
+					<div class="qa-entry a">
+					 <div class="qa-label">О:</div>
+					 <div class="qa-body">
+					 Если быть до&nbsp;конца откровенным, то&nbsp;да. Теоретически, навязав пользователям этот скрипт, я&nbsp;бы мог отслеживать, на&nbsp;какие сайты вы&nbsp;заходите при условии, что вы&nbsp;делаете это через фрейм овернульча. Но&nbsp;зачем мне это может понадобиться?
+					 </div>
+					</div>
+					<hr>
+					<div class="qa-entry q">
+					 <div class="qa-label">В:</div>
+					 <div class="qa-body">
+					 Тебе может быть и&nbsp;нет, а&nbsp;кому-то другому?
+					 </div>
+					</div>
+					<div class="qa-entry a">
+					 <div class="qa-label">О:</div>
+					 <div class="qa-body">
+					 Скрипт передает данные через <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">postMessage</a>, вторым параметром в&nbsp;котором является <i><b>origin</b></i>, то&nbsp;есть домен сайта. Это значит, что другой сайт не&nbsp;сможет воспользоваться этим скриптом.
+					 </div>
+					</div>
+					<hr>
+					<div class="qa-entry q">
+					 <div class="qa-label">В:</div>
+					 <div class="qa-body">
+					 Иногда на&nbsp;других сайтах в&nbsp;консоли браузера вылезают ошибки вида <i class="red">ERROR: Execution of&nbsp;script &rsquo;Overnullch Links&rsquo; failed!</i> 
+					 </div>
+					</div>
+					<div class="qa-entry a">
+					 <div class="qa-label">О:</div>
+					 <div class="qa-body">
+					 Это норма. Скрипт запускается во&nbsp;всех фреймах и&nbsp;пытается передать информацию во&nbsp;внешний фрейм, но&nbsp;безрезультатно, поскольку внешний фрейм не&nbsp;является овернульчем. Внутренний фрейм об&nbsp;этом не&nbsp;знает и&nbsp;не&nbsp;может знать, поэтому такие ошибки неизбежны, и&nbsp;их&nbsp;можно просто игнорировать.
+					 </div>
+					</div>
+					<hr>
+					<div class="qa-entry q">
+					 <div class="qa-label">В:</div>
+					 <div class="qa-body">
+					 Для работы скрипта недостаточно просто браузера? Что такое Greasemonkey и&nbsp;Violentmonkey?
+					 </div>
+					</div>
+					<div class="qa-entry a">
+					 <div class="qa-label">О:</div>
+					 <div class="qa-body">
+					 Это расширения для браузеров, позволяющие устанавливать пользовательские скрипты. <a href="https://addons.mozilla.org/ru/firefox/addon/greasemonkey/">Greasemonkey</a> для Firefox, <a href="https://github.com/violentmonkey/violentmonkey/">Violentmonkey</a> для Firefox Quantum и Chromium с его вариациями. Все менеджеры скриптов пытаются соблюдають общие стандарты, поэтому скрипт может заработать где-то еще.
+					 <br>
+					 Greasemonkey и&nbsp;Violentmonkey поддерживают установку одним кликом. Если по&nbsp;какой-то причине установка не&nbsp;проходит, просто скопируйте код скрипта и&nbsp;вставьте в&nbsp;предназначенное для этого поле вашего расширения.
+					 </div>
+					</div>
+					<hr>
+					<div class="qa-entry q">
+					 <div class="qa-label">В:</div>
+					 <div class="qa-body">
+					 А что с мобильными браузерами?
+					 </div>
+					</div>
+					<div class="qa-entry a">
+					 <div class="qa-label">О:</div>
+					 <div class="qa-body">
+					 <a href="https://play.google.com/store/apps/details?id=org.mozilla.firefox">Мобильный Firefox</a> с 57 релиза поддерживает расширения десктопной версии.
+	 				 </div>
+					</div>
+					<hr>
+					<div class="qa-entry q">
+					 <div class="qa-label">В:</div>
+					 <div class="qa-body">
+					 Скрипт перестал работать после смены домена.
+					 </div>
+					</div>
+					<div class="qa-entry a">
+					 <div class="qa-label">О:</div>
+					 <div class="qa-body">
+					 Все правильно, ведь сменился <i>origin</i>. Скрипт необходимо <a href="https://gitgud.io/ubhelbr/overnullch/raw/master/util/overnullch-links.user.js">переустановить</a>.
+					 </div>
+					</div>
+					<div class="close-faq">
+						<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="20px" height="20px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 96616 96616">
+						 <polygon class="fil1" points="79710,89370 48311,58553 16906,89370 7246,79710 38063,48305 7246,16906 16906,7246 48311,38058 79710,7246 89370,16906 58559,48305 89370,79710 "/>
+						</svg>
+					</div>
+			</div>
+		</div>
+<script>
+hv.start()
+
+$(() => {
+	$ready();
+	$('#hirudotron').propeller({
+	  inertia: 0.9993, 
+	  speed: 0.5
+	})
+	document.querySelectorAll('.fade-in').forEach(f => f.style.opacity = 1)
+});
+</script>
+</body>
+</html>

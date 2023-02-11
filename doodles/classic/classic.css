@@ -1,0 +1,34 @@
+.balls {
+  position: relative;
+  height: 395px;
+}
+.switcher {
+  width: 33px;
+  height: 33px;
+  position: absolute;
+  top: 50%;
+  cursor: pointer;
+  border-top: 2px solid white;
+  border-left: 2px solid white;
+  box-sizing: border-box;
+  transition: transform .2s, opacity .2s;
+  box-shadow: -2px -2px 2px 0px rgb(0 0 0 / 40%), inset 2px 2px 2px 0px rgb(0 0 0 / 40%);
+  opacity: .5;
+}
+.switcher:hover {
+  opacity: 1;
+}
+.sw-left {
+  left: 50px;
+  transform: translate(0, 0) rotate(-45deg);
+}
+.sw-right {
+  right: 50px;
+  transform: translate(0, 0) rotate(135deg);
+}
+.sw-left:hover {
+  transform: translate(-10px, 0) rotate(-45deg);
+}
+.sw-right:hover {
+  transform: translate(10px, 0) rotate(135deg);
+}
