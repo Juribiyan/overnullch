@@ -11,6 +11,6 @@ define('MOD_HASHES', join('|', array( // Enter hashes for mods, obtained the sam
   "mod2"
 )));
 
-if ($_GET['getpasswordhash']) {
+if (@$_GET['getpasswordhash']) {
   echo hash('sha256', $_GET['getpasswordhash'].SALT);
 }
