@@ -16,6 +16,7 @@ if (isset($_GET['switch'])) {
 }
 
 $ltrs = rand(4, 7);
+$captcha = '';
 if($captchalang == 'en') 
 	$captcha = english_word($ltrs);
 elseif($captchalang == 'ru')
@@ -100,10 +101,10 @@ function opsmaz($img,$ncolor){
 				if($sx<0 || $sy<0 || $sx>=$width-1 || $sy>=$height-1){
 					continue;
 				}else{
-					$color=imagecolorat($img, $sx, $sy) & 0xFF;
-					$color_x=imagecolorat($img, $sx+1, $sy) & 0xFF;
-					$color_y=imagecolorat($img, $sx, $sy+1) & 0xFF;
-					$color_xy=imagecolorat($img, $sx+1, $sy+1) & 0xFF;
+					$color=imagecolorat($img, (int)$sx, (int)$sy) & 0xFF;
+					$color_x=imagecolorat($img, (int)$sx+1, (int)$sy) & 0xFF;
+					$color_y=imagecolorat($img, (int)$sx, (int)$sy+1) & 0xFF;
+					$color_xy=imagecolorat($img, (int)$sx+1, (int)$sy+1) & 0xFF;
 				}
 				if($color==255 && $color_x==255 && $color_y==255 && $color_xy==255){
 					continue;
