@@ -259,7 +259,7 @@ var chans = {
     let hasBoards = (chan.boards && chan.boards.length) || chan.userboards
     , url = chan.own ? `${chan.url}/index.html` : (((!chan.own && chan.useAnonym) ? 'https://anonym.to?' : '') + chan.url)
     , name = _.escape(chan.name)
-    , htm = /*html*/`
+    , htm = html`
     <div class="chan chan_${chan.id}${!chan.colors ? ' uncolorized' : ''}${chan.headOnly ? ' headOnly' : ''}${chan.showDirs ? ' showDirs' : ''}${!hasBoards ? ' no-boards' : ''}">
       <a onclick="handleHomeClick(this)" target="main" href="${url}" class="chan-header head-link" data-href="${chan.url}"${chan.own ? ' onclick="router.clearHash()"' : ''}>
         <div class="chan-name">${name}</div>
@@ -268,7 +268,7 @@ var chans = {
         <div class="chan-name toggler" data-toggle="boards_${chan.id}">${name}</div>
       </div>
       <div class="chan-overlay chan-overlay-left">
-        ${hasBoards ? /*html*/`<a onclick="handleHomeClick(this)" class="iconic-link home-link" target="main" href="${url}" data-href="${chan.url}" title="Домашняя страница"${chan.own ? ' onclick="router.clearHash()"' : ''}>
+        ${hasBoards ? html`<a onclick="handleHomeClick(this)" class="iconic-link home-link" target="main" href="${url}" data-href="${chan.url}" title="Домашняя страница"${chan.own ? ' onclick="router.clearHash()"' : ''}>
           <svg class="icon"><use xlink:href="#i-home"></use></svg>
         </a>` : ''}
         <a class="iconic-link" target="main" href="${chan.wiki}" title="Информация на вики">
@@ -294,7 +294,7 @@ var chans = {
           </label>
         </div>
         ${!chan.own ? 
-        /*html*/`<div class="settings-entry">
+        html`<div class="settings-entry">
           <label for="useanonym_${chan.id}">
           <input type="checkbox" id="useanonym_${chan.id}" ${chan.useAnonym ? 'checked' : ''} onchange="settings.handleCheck('useAnonym', '${chan.id}')">
           <span>Использовать anonym.to</span>
@@ -386,7 +386,7 @@ var chans = {
     , hiddenCompletely = (!cat.widgetID && !hasBoards) || _.includes(chan.deletedCats, catID)
     , htm = `<div class="category${cat.userboards ? ' userboards' : ''}"${hiddenCompletely ? hide : ''}${cat.widgetID ? ` data-widget="${cat.widgetID}"` : ''}>`
     if (!flat) {
-      htm += /*html*/`
+      htm += html`
       <div class="cat-header toggler" data-toggle="cat_${chan.id}_${catID}">
         <div class="ch-name">${cat.name}</div>
         <div class="cat-options">
@@ -403,7 +403,7 @@ var chans = {
         , dir = _.escape(board.dir)
         , cleanURL = board.external ? board.url : (chan.url + chan.prefix + dir + chan.postfix)
         , url = (chan.useAnonym ? 'https://anonym.to?' : '') + cleanURL
-        htm += /*html*/`
+        htm += html`
         <a target="main" href="${url}" class="board${board.external ? ' external' : ''}" data-href="${cleanURL}" data-dir="${dir}" onclick="handleLinkClick(this)">
           ${board.external ? '' : `<span class="board-dir">/${dir}/ - </span>`}<span class="board-name">${desc}</span>
         </a>`
@@ -699,7 +699,7 @@ widgets.radio = {
     widget.audio.volume = saved.volume
     widget.audio.onloadeddata = () => widget.$el.removeClass('disabled')
 
-    $(/*html*/`<div class="rw-playpause">
+    $(html`<div class="rw-playpause">
       <div class="pause-icon"></div>
       <div class="play-icon"></div>
     </div>`)
@@ -1055,7 +1055,7 @@ var live = {
     $('#live-content').html(data.reduce((htm, link) => htm + this.buildLink(link), ''))
   },
   buildLink: function(link) {
-    return /*html*/`<a target="main" href="${_.escape(link.url)}" class="board external" onclick="handleBoardClick(this)">
+    return html`<a target="main" href="${_.escape(link.url)}" class="board external" onclick="handleBoardClick(this)">
       <span class="board-name">${_.escape(link.description)}</span>
       <span class="link-domain">${_.escape(this.getDomainName(link.url))}</span>
     </a>`

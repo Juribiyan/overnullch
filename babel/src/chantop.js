@@ -65,7 +65,7 @@ var chanTop = {
 		, addRemove = isInstalled ? 'Удалить' : 'Добавить'
 		, name = _.escape(chan.name)
 		, wiki = (chan.wiki && chan.wiki.match(/https?:\/\//)) ? chan.wiki : (conf.wiki+(chan.wiki || name))
-		return /*html*/`<div class="ct-chan">
+		return html`<div class="ct-chan">
 			<img src="/chans/balls/${chan.section}/${chan.id}.png?uid=${chan._id}${chan.ballv ? `&v=${chan.ballv}` : ''}" alt="${name}" class="chan-avatar">
 			<div class="catc-addremove adder-remover" title="${addRemove}">${xPlus}</div>
 			<a href="${_.escape(chan.url)}" target="_blank" class="chan-name"><span>${name}</span></a>
@@ -212,7 +212,7 @@ var Masher = {
 		, addRemove = isInstalled ? 'Удалить' : 'Добавить'
 		, name = _.escape(chan.name)
 		, wiki = (chan.wiki && chan.wiki.match(/https?:\/\//)) ? chan.wiki : (conf.wiki+(chan.wiki || name))
-		return /*html*/`<div class="catalog-chan">
+		return html`<div class="catalog-chan">
 		  <div class="cc-ball-wrap" id="ch_${chan.id}">
 		    <img src="/chans/balls/${chan.section}/${chan.id}.png?uid=${chan._id}${chan.ballv ? `&v=${chan.ballv}` : ''}" alt="${name}" class="cc-ball">
 		    <a href="${_.escape(chan.url)}" target="_blank" class="channame-overlay">${name}</a>
