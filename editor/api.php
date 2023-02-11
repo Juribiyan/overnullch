@@ -27,7 +27,7 @@ if (isset($_GET['checkuniq'])) {
 $mods = explode('|', MOD_HASHES);
 $admins = explode('|', ADMIN_HASHES);
 
-if (in_array($_GET['forceupdate'], $admins)) {
+if (@$_GET['forceupdate'] && in_array($_GET['forceupdate'], $admins)) {
   update_json();
 }
 
@@ -41,6 +41,8 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
     retreat(array('wrong-captcha'));
 
   $hash = hash('sha256', $_POST['password'].SALT);
+  $is_admin = false;
+  $is_mod = false;
   if (in_array($hash, $admins)) {
     $is_admin = true;
     $is_mod = true;
@@ -64,7 +66,7 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
 
   if ($_POST['action'] == 'new') {
     if ($chan_exists)
-      retreat(array(field => 'id', msg => 'occupied'));
+      retreat(array("field" => 'id', "msg" => 'occupied'));
   }
   else {
     if (! $chan_exists)
@@ -151,7 +153,6 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
     advance($res);
   }
   else {
-    var_dump($tc_db->sql);
     retreat('db-error');
   }
 }
@@ -160,28 +161,30 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
 function check_validity($input, $f) {
   global $is_admin, $is_mod;
 
+  $errs = array();
+
   if (isset($input['id'])) {
     $output['id'] = trim($input['id']);
     if (strlen($output['id']) > 20)
-      $errs []= array(field => "id", msg => 'too-long');
+      $errs []= array("field" => "id", "msg" => 'too-long');
     if (strlen($output['id']) < 3)
-      $errs []= array(field => "id", msg => 'too-short');
+      $errs []= array("field" => "id", "msg" => 'too-short');
   }
   if (isset($input['name'])) {
     $output['name'] = trim($input['name']);
     if (strlen($output['name']) > 50)
-      $errs []= array(field => "name", msg => 'too-long');
+      $errs []= array("field" => "name", "msg" => 'too-long');
     if (strlen($output['name']) < 3)
-      $errs []= array(field => "name", msg => 'too-short');
+      $errs []= array("field" => "name", "msg" => 'too-short');
   }
   $urly = array('url', 'userboards');
   foreach($urly as &$up) {
     if (isset($input[$up])) {
       $output[$up] = trim($input[$up]);
       if (preg_match("/https?:\\/\\//", $output[$up]) === false)
-        $errs []= array(field => $up, msg => 'invalid');
+        $errs []= array("field" => $up, "msg" => 'invalid');
       if (strlen($output['url']) > 100)
-        $errs []= array(field => $up, msg => 'too-long');
+        $errs []= array("field" => $up, "msg" => 'too-long');
     }
   }
   $pairy = array('catbg', 'colors', 'offset');
@@ -200,7 +203,7 @@ function check_validity($input, $f) {
               $ok = false;
           }
           if (!$ok)
-            $errs []= array(field => $pp, msg => 'invalid');
+            $errs []= array("field" => $pp, "msg" => 'invalid');
         }
         else {
           $ok = true;
@@ -210,7 +213,7 @@ function check_validity($input, $f) {
               $ok = false;
           }
           if (!$ok || strlen(implode('|', $output[$pp])) > 10)
-            $errs []= array(field => $pp, msg => 'invalid');
+            $errs []= array("field" => $pp, "msg" => 'invalid');
         }
         $output[$pp] = implode('|', $output[$pp]);
       }
@@ -298,6 +301,7 @@ function check_validity($input, $f) {
   );
 }
 function check_integrity($input, $act) {
+  $errs = array();
   $absolutely_required = array('id', 'password');
   foreach($absolutely_required as &$arf) {
     if (!isset($input[$arf]))
@@ -309,7 +313,7 @@ function check_integrity($input, $act) {
   if ($act == 'add') {
     foreach ($required as &$rf) {
       if (!isset($input[$rf]))
-        $errs []= array(field => $rf, msg => 'missing');
+        $errs []= array("field" => $rf, "msg" => 'missing');
     }
   }
   if ($act == 'edit') {
@@ -329,10 +333,11 @@ function check_uniqueness($key, $value) {
   return intval($tc_db->GetOne("SELECT COUNT(1) FROM `".DB."` WHERE `".$key."` = ?", array($value)));
 }
 function check_uniqueness_forall($input, $act) {
+  $errs = array();
   $fields = array('name', 'url');
   foreach ($fields as &$f) {
-    if (check_uniqueness($f, $input[$f]))
-      $errs []= array(field => $f, msg => 'occupied');
+    if (@$input[$f] && check_uniqueness($f, $input[$f]))
+      $errs []= array("field" => $f, "msg" => 'occupied');
   }
   if ($errs)
     retreat($errs);
@@ -418,7 +423,7 @@ function update_json() {
   $privilege_props = array('included', 'default', 'offline');
   foreach ($chans as &$chan) {
     foreach ($privilege_props as &$sp) {
-      if ($chan[$sp] == '1') {
+      if (@$chan[$sp] == '1') {
         $chan[$sp] = 1;
       }
       else {
@@ -426,13 +431,13 @@ function update_json() {
       }
     }
     foreach ($optional_props as &$op) {
-      if ($chan[$op] == null)
+      if (@$chan[$op] == null)
         unset($chan[$op]);
     }
     if ($chan['ballv'] == 0)
       unset($chan['ballv']);
     foreach ($paired_props as &$pp) {
-      if ($chan[$pp]) {
+      if (@$chan[$pp]) {
         $chan[$pp] = explode('|', $chan[$pp]);
         if ($pp == 'offset')
           foreach ($chan[$pp] as &$cpp)
@@ -440,7 +445,7 @@ function update_json() {
       }
     }
     foreach ($json_props as &$jp) {
-      if ($chan[$jp])
+      if (@$chan[$jp])
         $chan[$jp] = json_decode($chan[$jp]);
     }
   }
@@ -476,7 +481,7 @@ function post_live_link($link, $description) {
 //API
 function retreat($errmsg='error') {
   exit(json_encode(array(
-    error => $errmsg
+    "error" => $errmsg
   )));
 }
 function advance($data=array()) {
