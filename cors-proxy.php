@@ -143,7 +143,7 @@ $proxy = false; // Not using I0_CURL_PROXY from config.php to skip the unnecessa
 
 // ############################################################################
 
-$url = $_GET['url'];
+$url = @$_GET['url'];
 
 if ( !$url ) {
   
@@ -244,11 +244,11 @@ if (isset($_GET['mode']) && ($_GET['mode'] == 'native')) {
   $data['contents'] = $decoded_json ? $decoded_json : $contents;
   
   // Generate appropriate content-type header.
-  $is_xhr = strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+  $is_xhr = strtolower(@$_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
   header( 'Content-type: application/' . ( $is_xhr ? 'json' : 'x-javascript' ) );
   
   // Get JSONP callback.
-  $jsonp_callback = $enable_jsonp && isset($_GET['callback']) ? $_GET['callback'] : null;
+  $jsonp_callback = $enable_jsonp && isset($_GET['callback']) ? @$_GET['callback'] : null;
   
   // Generate JSON/JSONP string
   $json = json_encode( $data );
