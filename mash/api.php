@@ -23,7 +23,7 @@ if($_GET['act'] == 'captcha') {
   if(!isset($_POST['captcha']) || $correct_captcha != mb_strtoupper($_POST['captcha']) || empty($correct_captcha))
     retreat('wrong_captcha');
   $_SESSION['human'] = true;
-  if($_SESSION['total_votes'] >= MAX_VOTES)
+  if(@$_SESSION['total_votes'] >= MAX_VOTES)
     $_SESSION['total_votes'] = 0;
   $continue_vote = true;
 }
@@ -83,7 +83,10 @@ if(@$continue_vote || $_GET['act'] == 'vote') {
   unset($_SESSION['challengers']);
 
   $_SESSION['last_vote'] = $now;
-  $_SESSION['total_votes']++;
+  if (isset($_SESSION['total_votes']))
+    $_SESSION['total_votes']++;
+  else
+    $_SESSION['total_votes'] = 1;
 
   $ret['rates'] = get_rates();
   $ret['challengers'] = get_challengers();
