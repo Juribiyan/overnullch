@@ -334,22 +334,8 @@ function makeGradient(colors) {
 	return 'background:' + ret;
 }
 
-
 NodeList.prototype.forEach = Array.prototype.forEach;
 
-// Produces a function which applies fn() to all values
-function makeEscapeTagLiteralFn(fn = v => v) {
-  return function(strings, ...values) {
-    let result = ""
-    for (let i = 0; i < strings.length; i++) {
-      result += strings[i]
-      if (i < values.length) {
-        result += fn(''+values[i])
-      }
-    }
-    return result
-  }
-}
 // Escape tag literal functions for jQuery queries and regular expressions
 var jq = makeEscapeTagLiteralFn(v => v.replace(/([!"#$%&'()*+,\-./:;<=>?@[\\\]^`{|}~ ])/g, "\\$1"))
 

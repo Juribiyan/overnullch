@@ -3,7 +3,7 @@
   "version": "2.1.0",
   "description": "Best overchan in the world",
   "scripts": {
-    "build": "babel src/catalog.js --out-dir ../lib/es5 --source-maps && babel src/chantop.js --out-dir ../lib/es5 --source-maps && babel src/editor.js --out-dir ../lib/es5 --source-maps && babel src/frame.js --out-dir ../lib/es5 --source-maps && babel src/live.js --out-dir ../lib/es5 --source-maps"
+    "build": "babel src/catalog.js --out-dir ../lib/es5 --source-maps && babel src/chantop.js --out-dir ../lib/es5 --source-maps && babel src/editor.js --out-dir ../lib/es5 --source-maps && babel src/frame.js --out-dir ../lib/es5 --source-maps && babel src/live.js --out-dir ../lib/es5 --source-maps && babel src/makeEscapeTagLiteralFn.js --out-dir ../lib/es5 --source-maps"
   },
   "babel": {
     "presets": [

@@ -10,7 +10,15 @@
 	<script src="/lib/javascript/lodash.min.js"></script>
 	<script src="/lib/javascript/Sortable.min.js"></script>
 	<script src="/lib/javascript/es6-promise.auto.min.js"></script>
-	<script src="/lib/es5/catalog.js"></script>
+	<script src="/lib/es5/makeEscapeTagLiteralFn.js"></script>
+
+	<!-- For production: -->
+ 	<script src="/lib/es5/catalog.js"></script>
+
+ 	<!-- For development: -->
+ 	<!-- <script>var html = makeEscapeTagLiteralFn()</script> -->
+ 	<!-- <script src="/babel/src/catalog.js"></script> -->
+	
 </head>
 <body class="list-collapsed">
 	<script src="/lib/javascript/svgsprites.js" url="catalog.svg"></script>

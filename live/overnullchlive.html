@@ -7,7 +7,14 @@
   <link rel="stylesheet" href="/css/roboto.css">
 	<link rel="stylesheet" href="live.css">
 	<script src="/lib/javascript/jquery-3.6.3.min.js"></script>
+  <script src="/lib/es5/makeEscapeTagLiteralFn.js"></script>
+
+  <!-- For production: -->
   <script src="/lib/es5/live.js"></script>
+
+  <!-- For development: -->
+  <!-- <script>var html = makeEscapeTagLiteralFn()</script> -->
+  <!-- <script src="/babel/src/live.js"></script> -->
 </head>
 <body>
   <script src="/lib/javascript/svgsprites.js" url="/css/icons/frame.svg"></script>

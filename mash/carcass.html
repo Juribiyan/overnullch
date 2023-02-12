@@ -10,7 +10,14 @@
 	<script src="/lib/javascript/jquery-3.6.3.min.js"></script>
 	<script src="/lib/javascript/lodash.min.js"></script>
   <script src="/lib/simplebar/simplebar.min.js"></script>
-	<script src="/lib/es5/chantop.js"></script>
+  <script src="/lib/es5/makeEscapeTagLiteralFn.js"></script>
+
+  <!-- For production: -->
+  <script src="/lib/es5/chantop.js"></script>
+
+  <!-- For development: -->
+  <!-- <script>var html = makeEscapeTagLiteralFn()</script> -->
+  <!-- <script src="/babel/src/chantop.js"></script> -->
 </head>
 <body>
   <div class="ly-block" id="battleground-wrap">

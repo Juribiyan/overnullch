@@ -12,8 +12,15 @@
 	<script src="/../../lib/javascript/less.min.js"></script>
 	<script src="beautify-css.js"></script>
 	<script src="/lib/javascript/es6-promise.auto.min.js"></script>
-	<script src="/lib/es5/editor.js"></script>
-	<!--script src="/babel/src/editor.js"></script><script>let html = makeEscapeTagLiteralFn(v => v)</script-->
+	<script src="/lib/es5/makeEscapeTagLiteralFn.js"></script>
+
+	<!-- For production: -->
+ 	<script src="/lib/es5/editor.js"></script>
+
+ 	<!-- For development: -->
+ 	<!-- <script>var html = makeEscapeTagLiteralFn()</script> -->
+ 	<!-- <script src="/babel/src/editor.js"></script> -->
+ 	
 </head>
 <body>
 	<script src="/lib/javascript/svgsprites.js" url="editor.svg,/css/icons/frame.svg"></script>
