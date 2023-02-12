@@ -351,19 +351,44 @@ var chans = {
         }
       }
 
-      $.get(chan.userboards)
-      .done(proceedUbrds.bind(this))
-      .fail(err => {
-        console.error(err)
-        $.get(`/cors-proxy.php?url=${chan.userboards}`)
-        .done(data => {
+      let known_cors = !!localStorage[`cors:${chan.id}`]
+      $.get(known_cors ? `/cors-proxy.php?url=${chan.userboards}` : chan.userboards)
+      .done(data => {
+        if (known_cors) {
           if(data.status.http_code == 200) {
+            console.info(`Loaded ${chan.userboards} using cors-proxy`)
             proceedUbrds(data.contents)
           }
-        })
-        .fail(function(err) {
-          console.error(err)
-        })
+          else {
+            console.error(`Unable to load ${chan.userboards} using cors-proxy`, data)
+          }
+        }
+        else {
+          console.info(`Loaded ${chan.userboards}`)
+          proceedUbrds(data)
+        }
+      })
+      .fail(err => {
+        if (!known_cors) {
+          console.warn(`Unable to load ${chan.userboards} natively; will try to use cors-proxy...`)
+          $.get(`/cors-proxy.php?url=${chan.userboards}`)
+          .done(data => {
+            if(data.status.http_code == 200) {
+              localStorage[`cors:${chan.id}`] = 1
+              console.info(`Loaded ${chan.userboards} using cors-proxy`)
+              proceedUbrds(data.contents)
+            }
+            else {
+              console.error(`Unable to load ${chan.userboards} using cors-proxy`, data)
+            }
+          })
+          .fail(function(err) {
+            console.error(`Unable to load ${chan.userboards} using cors-proxy`)
+          })
+        }
+        else {
+          console.error(`Unable to load ${chan.userboards} using cors-proxy`)
+        }
       })
     }
 
