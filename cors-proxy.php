@@ -170,12 +170,12 @@ if ( !$url ) {
     curl_setopt( $ch, CURLOPT_POSTFIELDS, $_POST );
   }
   
-  if (isset($_GET['send_cookies']) && $_GET['send_cookies']) {
+  if ( @$_GET['send_cookies'] ) {
     $cookie = array();
     foreach ( $_COOKIE as $key => $value ) {
       $cookie[] = $key . '=' . $value;
     }
-    if (isset($_GET['send_session']) && $_GET['send_session']) {
+    if ( @$_GET['send_session'] ) {
       $cookie[] = SID;
     }
     $cookie = implode( '; ', $cookie );
@@ -197,9 +197,9 @@ if ( !$url ) {
 }
 
 // Split header text into an array.
-$header_text = preg_split( '/[\r\n]+/', $header );
+$header_text = preg_split( '/[\r\n][\r\n]/', $header );
 
-if (isset($_GET['mode']) && ($_GET['mode'] == 'native')) {
+if ( @$_GET['mode'] == 'native' ) {
   if ( !$enable_native ) {
     $contents = 'ERROR: invalid mode';
     $status = array( 'http_code' => 'ERROR' );
@@ -220,7 +220,7 @@ if (isset($_GET['mode']) && ($_GET['mode'] == 'native')) {
   $data = array();
   
   // Propagate all HTTP headers into the JSON data object.
-  if (isset($_GET['full_headers']) && $_GET['full_headers']) {
+  if ( @$_GET['full_headers'] ) {
     $data['headers'] = array();
     
     foreach ( $header_text as $header ) {
@@ -232,7 +232,7 @@ if (isset($_GET['mode']) && ($_GET['mode'] == 'native')) {
   }
   
   // Propagate all cURL request / response info to the JSON data object.
-  if (isset($_GET['full_status']) && $_GET['full_status']) {
+  if ( @$_GET['full_status'] ) {
     $data['status'] = $status;
   } else {
     $data['status'] = array();
