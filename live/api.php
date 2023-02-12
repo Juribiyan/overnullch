@@ -1,5 +1,6 @@
 <?php
 require __DIR__.'/../config.php';
+require __DIR__.'/../overnullch-config.php';
 mb_internal_encoding("UTF-8");
 $tc_db->SetFetchMode(ADODB_FETCH_ASSOC);
 $tc_db->Execute('SET NAMES utf8');
@@ -15,7 +16,7 @@ header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: X-PINGOTHER, Content-Type');
 header('Access-Control-Max-Age: 86400');
 
-if (!$_POST['url'] || !$_POST['description']) {
+if (!@$_POST['url'] || !@$_POST['description']) {
   retreat('no-data-provided');
 }
 $url = super_trim($_POST['url']);
@@ -29,10 +30,10 @@ if (mb_strlen($desc) > MAXDESCLENGTH) {
 if (mb_strlen($desc) < MINDESCLENGTH) {
   retreat('description-too-short');
 }
-if (! preg_match("/^https?:\/\/(?:www\.)?((?:(?!www\.)[^\/\?#\.\s]+?\.)[^\/\?#\s]{2,})(\/[^\?#]+?)?\/?(?:(\?.+?))?(?:(#.+?))?$/i", $url, $url_parsed)) {
+if (! preg_match("/^https?:\/\/([^\?\#\s\/\:]+)(\:[0-9]+|)((?:\/[^\?\#\s\/]+)+\/?|)\/*(\?[^\s\#]+\/*|)(\#[^\s\?]+|)/i", $url, $url_parsed)) {
   retreat('bad-url');
 }
-$url_norm = strtolower($url_parsed[1].$url_parsed[2].$url_parsed[3].$url_parsed[4]);
+$url_norm = strtolower($url_parsed[1].$url_parsed[3].$url_parsed[4]);
 $same_url_exists = $tc_db->GetOne('SELECT COUNT(1) FROM `live_links` WHERE `urlnorm`=?', array($url_norm));
 if ($same_url_exists) {
   retreat('url-exists');
@@ -40,7 +41,7 @@ if ($same_url_exists) {
 $iphash = md5($_SERVER['REMOTE_ADDR'].SALT);
 $time_passed = $tc_db->GetOne('SELECT (NOW()-`timestamp`) `time_passed` FROM `live_links` WHERE `iphash`=? ORDER BY `timestamp` DESC LIMIT 1', array($iphash));
 if ($time_passed && $time_passed < TIMEOUT) {
-  retreat(array(errtype => 'timeout', errdata => TIMEOUT-$time_passed));
+  retreat(array("errtype" => 'timeout', "errdata" => TIMEOUT-$time_passed));
 }
 $insert_result = $tc_db->Execute('INSERT INTO `live_links` (`url`, `urlnorm`, `description`, `iphash`) VALUES (?, ?, ?, ?)', array($url, $url_norm, $desc, $iphash));
 if(!$insert_result || $tc_db->Affected_Rows() < 1) {
@@ -59,12 +60,12 @@ function super_trim($str) {
 
 function retreat($errmsg) {
   exit(json_encode(array(
-    error => $errmsg
+    "error" => $errmsg
   )));
 }
 function advance($data) {
   exit(json_encode(array(
-    error => false,
-    data => $data
+    "error" => false,
+    "data" => $data
   )));
 }
