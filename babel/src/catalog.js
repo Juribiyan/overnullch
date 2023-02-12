@@ -220,7 +220,6 @@ var catalog = {
 		injector.inject('chan-offsets', this.css)
 	},
 	buildChan: function(chan) {
-		console.log(chan.id)
 		let name = _.escape(chan.name)
 		, wiki = (chan.wiki && chan.wiki.match(/https?:\/\//)) ? chan.wiki : (conf.wiki+(chan.wiki || name))
 		, search = `${chan.originalID || chan.id} ${name} ${chan.url.replace(/^https?:\/\//, '')} ${(chan.wiki || '').replace(/^https?:\/\//, '')}`
