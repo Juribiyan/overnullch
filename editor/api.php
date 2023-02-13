@@ -29,16 +29,17 @@ $admins = explode('|', ADMIN_HASHES);
 
 if (@$_GET['forceupdate'] && in_array($_GET['forceupdate'], $admins)) {
   update_json();
+  echo 'updated';
 }
 
 //main
 if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete', 'edit'))) {
   session_start();
 
-  $captcha = $_SESSION['security_code'];
+  $captcha = @$_SESSION['security_code'];
   unset($_SESSION['security_code']);
   if(!isset($_POST['captcha']) || $captcha != mb_strtoupper($_POST['captcha']) || empty($captcha))
-    retreat(array('wrong-captcha'));
+    retreat('wrong-captcha');
 
   $hash = hash('sha256', $_POST['password'].SALT);
   $is_admin = false;
@@ -154,6 +155,45 @@ if (isset($_POST['action']) && in_array($_POST['action'], array('new', 'delete',
   }
   else {
     retreat('db-error');
+  }
+}
+
+if (@$_POST['action'] == 'sort' && @$_POST['data']) {
+  $data = json_decode($_POST['data']);
+  if (!$data || !@count($data)) {
+    retreat("data-corrupted");
+  }
+
+  session_start();
+  $captcha = @$_SESSION['security_code'];
+  unset($_SESSION['security_code']);
+  if(!isset($_POST['captcha']) || $captcha != mb_strtoupper($_POST['captcha']) || empty($captcha))
+    retreat('wrong-captcha');
+
+  $hash = hash('sha256', @$_POST['password'].SALT);
+  $is_admin = false;
+  $is_mod = false;
+  if (!in_array($hash, $admins)) {
+    retreat("not-admin");
+  }
+
+  $q = "UPDATE `".DB."` SET `order` = CASE `_id`\n";
+  $ids = array();
+  foreach($data as $id_order) {
+    if (@count($id_order) != 2) retreat("data-corrupted");
+    list($id, $order) = $id_order;
+    if (!(is_numeric($id) && is_numeric($order))) retreat("data-corrupted");
+    $q .= "WHEN $id THEN $order \n";
+    $ids []= $id;
+  }
+  if (!count($ids)) retreat("data-corrupted");
+  $q .= "ELSE `order` END  WHERE `_id` IN (".implode(', ', $ids).")";
+  if ($tc_db->Execute($q)) {
+    update_json();
+    advance(array('action' => 'sort-success'));
+  }
+  else {
+    retreat("db-error");
   }
 }
 
@@ -273,7 +313,7 @@ function check_validity($input, $f) {
     list($width, $height, $type) = getimagesize($ball['tmp_name']);
     if ($type != IMAGETYPE_PNG)
       $errs []= array(field => 'ball', msg => 'image-not-png');
-    if ($width > 200 || $hight > 200)
+    if ($width > 200 || $height > 200)
       $errs []= array(field => 'ball', msg => 'image-too-large');
     $output['ball'] = $ball;
   }
@@ -356,7 +396,9 @@ function new_chan($input) {
   }
   $filename = ROOTDIR.'chans/balls/'.$input['section'].'/'.$input['id'].'.png';
   save_file($input);
-  return $tc_db->Execute('INSERT INTO `'.DB.'` ('.implode(', ', $keys).') VALUES ('.implode(', ', $qms).')', $values);
+  $ins = $tc_db->Execute('INSERT INTO `'.DB.'` ('.implode(', ', $keys).') VALUES ('.implode(', ', $qms).')', $values);
+  if ($ins)
+    return $tc_db->Execute('UDPATE `'.DB.'` SET `order`=`_id` WHERE `id`= ?', array($input['id']));
 }
 function edit_chan($input) {
   global $tc_db;
@@ -412,11 +454,10 @@ function save_file($input) {
   }
 }
 
-
 function update_json() {
   global $tc_db;
   $json_filename = ROOTDIR.'chans/chans.json';
-  $chans = $tc_db->GetAll("SELECT `_id`, `id`, `default`, `offline`, `name`, `url`, `included`, `boards`, `userboards`, `catbg`, `wiki`, `offset`, `prefix`, `postfix`, `radio`, `colors`, `advanced_less`, `ballv`, `userboards_catname`, `userboards_system` FROM `".DB."` ORDER BY `_id` ASC");
+  $chans = $tc_db->GetAll("SELECT `_id`, `id`, `default`, `offline`, `name`, `url`, `included`, `boards`, `userboards`, `catbg`, `wiki`, `offset`, `prefix`, `postfix`, `radio`, `colors`, `advanced_less`, `ballv`, `userboards_catname`, `userboards_system`, `order` FROM `".DB."` ORDER BY `default`, `offline`, `order`");
   $optional_props = array('_id', 'userboards', 'wiki', 'offset', 'prefix', 'postfix', 'radio', 'colors', 'advanced_less', 'userboards_catname', 'userboards_system', `ballv`);
   $paired_props = array('colors', 'catbg', 'offset');
   $json_props = array('boards', 'radio');

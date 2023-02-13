@@ -759,6 +759,9 @@ input[type=number] {
 .f-prompt {
   background: #e88300;
 }
+.f-sort {
+  background: #0a5e9a;
+}
 #upload-form input {
   background: transparent;
   border-color: transparent;
@@ -883,7 +886,17 @@ label[for=password] {
 .condensed {
   font-family: Roboto Condensed;
 }
-.f-prompt .onprompt-hide {
+.f-prompt .onprompt-hide,
+.f-sort .onsort-hide,
+.onsort-show,
+.f-sort .sb-upload,
+.f-sort .sb-delete {
+  display: none;
+}
+.f-sort .onsort-show {
+  display: block;
+}
+.f-sort .sb-upload {
   display: none;
 }
 #upload-form::before {
@@ -914,6 +927,14 @@ label[for=password] {
 .f-prompt::before {
   border-color: transparent transparent #e88300 transparent;
   right: 116px!important;
+}
+.f-sort::before {
+  border-color: transparent transparent #0a5e9a transparent;
+  left: -10px;
+  top: 77px!important;
+}
+.expanded.f-sort#upload-form::before {
+  transform: rotate(-90deg)!important;
 }
 
 #form-spinner {

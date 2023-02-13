@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `over_chans` (
   `advanced_less` text,
   `passhash` char(64) NOT NULL DEFAULT '',
   `ballv` tinyint(4) DEFAULT '0',
+  `order` INT(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`_id`),
   UNIQUE KEY `id` (`id`)
 ) DEFAULT CHARSET=utf8mb4;

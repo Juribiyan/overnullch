@@ -1146,6 +1146,14 @@ var radio = {
 var library = {
 	build: function(chans, section) {
 		chans.forEach(chan => this.addChan(chan, section || (chan.offline ? 'offline' : (chan.default ? 'default' : 'custom'))))
+		if (IS_ADMIN) {
+			this.memoizeOrder()
+			Sortable.create(document.querySelector('#chans'), {
+				animation: 150,
+				onEnd: () => this.reorder()
+			})
+			this.sortingData = null
+		}
 	},
 	buildChan: function(chan, section) {
 		section = section || chan.section
@@ -1158,7 +1166,7 @@ var library = {
 		<button class="btn export-draft">
 			<svg class="icon" title="Экспортировать черновик"><use xlink:href="#i-download"></use></svg>
 		</button>` : ''
-		, htm = escHTML`<li class="lib-chan sect-${section}${!chan.name ? ' no-name' : ''}" id="chan_${chan.id}" data-search="${search}">
+		, htm = escHTML`<li class="lib-chan sect-${section}${!chan.name ? ' no-name' : ''}" id="chan_${chan.id}" data-search="${search}" data-order="${chan.order}" data-id="${chan._id}">
 			<img src="${ballSrc}" class="lib-chanball">
 			<div class="chan-title">${chan.name || 'Без имени'}</div>`+dlbtn+`
 		</li>`
@@ -1175,6 +1183,8 @@ var library = {
 		let $chan = this.buildChan(chan, section)
 		$chan.appendTo('#chans')
 		fresh && this.highlight($chan)
+		if (this.sortingData?.length)
+			this.reorder()
 		let libdata = $chan[0]._libdata
 		return libdata
 	},
@@ -1188,12 +1198,43 @@ var library = {
 	},
 	deleteChan: function(id) {
 		$(jq`#chan_${id}`).remove()
+		if (this.sortingData?.length)
+			this.reorder()
 	},
 	highlight: function($chan) {
 		let sect = $chan[0]._libdata.section
 		$(jq`.tab[data-tab=${sect}]`).click()
 		$chan.addClass('fresh')
 		toggleLib(true)
+	},
+	getOrder: function() {
+		return [].map.call(document.querySelectorAll('.lib-chan:not(.sect-drafts)'), ch => ({
+			order: +ch.dataset.order,
+			id: +ch.dataset.id,
+			name: ch.id
+		}))
+	},
+	memoizeOrder: function() {
+		this.memoizedOrder = this.getOrder()
+	},
+	reorder: function() {
+		let data = [];
+		this.getOrder().forEach((newOrder, i) => {
+			let oldOrder = this.memoizedOrder[i]
+			if (newOrder.order != oldOrder.order) {
+				data.push([
+					newOrder.id,
+					oldOrder.order
+				])
+			}
+		})
+		this.sortingData = data
+		upForm.toggle(data.length && 'sort')
+	},
+	rebuild: function() {
+		document.querySelector('#chans').innerHTML = ''
+		$.getJSON(`/chans/chans.json?v=${new Date().getTime()}`)
+		.done(data => this.build(data.chans))
 	}
 }
 
@@ -1485,6 +1526,9 @@ var libchan = {
 		this.current = null
 		this.setMode('new')
 		upForm.toggle()
+		if (library.sortingData) {
+			library.rebuild()
+		}
 	}
 }
 
@@ -1678,9 +1722,12 @@ var upForm = {
 		if (! type)
 			this.$form.removeClass('expanded')
 		else {
-			this.$form.removeClass('f-upload f-delete f-prompt pr-idchanged pr-idexists').addClass(`f-${type} expanded`)
-			let draftDelete = libchan.current && libchan.current.section === 'drafts' && type === 'delete'
-			$('#upload-form input').prop('required', !draftDelete)
+			this.$form.removeClass('f-upload f-delete f-prompt pr-idchanged pr-idexists f-sort').addClass(`f-${type} expanded`)
+			let draftDelete = false
+			if (type != 'sort') {
+				let draftDelete = libchan.current && libchan.current.section === 'drafts' && type === 'delete'
+				$('#upload-form input').prop('required', !draftDelete)
+			}
 			if (!draftDelete && $('.captcha').hasClass('not-loaded'))
 				refreshCaptcha()
 		}
@@ -1690,16 +1737,20 @@ var upForm = {
 	},
 	submit: function(ev) {
 		ev.preventDefault()
-		let action = this.$form.hasClass('f-delete') ? 'delete' : 'upload'
-		if (libchan.current && libchan.current.section === 'drafts') {
-			if (action === 'delete') {
+		let action = this.$form.hasClass('f-delete') 
+			? 'delete' 
+			: ( this.$form.hasClass('f-sort') 
+				? 'sort' 
+				: 'upload' )
+		if (action != 'sort') {
+			if (action === 'delete' && libchan.current && libchan.current.section === 'drafts') {
 				drafts.remove(libchan.current.id)
 				this.toggle()
 				return
 			}
+			if (! this.checkFields()) 
+				return this.showErrors('fill-required-fields')
 		}
-		if (! this.checkFields()) 
-			return this.showErrors('fill-required-fields')
 		this.$form.addClass('busy')
 		if (action == 'upload') {
 			libchan.proceedWithData(action, true)
@@ -1711,7 +1762,7 @@ var upForm = {
 				this.$form.removeClass('busy')
 			})
 		}
-		else {
+		if (action == 'delete') {
 			let fd = new FormData()
 			$('#chan-id')[0].validate(1).then(id => {
 				fd.apnd('id', id)
@@ -1720,9 +1771,19 @@ var upForm = {
 			}, 
 			e => console.error(e))
 		}
+		if (action == 'sort') {
+			if (!library?.sortingData?.length) {
+				this.showErrors('nothing-to-edit')
+				this.$form.removeClass('busy')
+				return
+			}
+			let fd = new FormData()
+			fd.apnd('data', library.sortingData)
+			this.send('sort', fd)
+		}
 	},
 	send: function(action, fd) {
-		if (libchan.current && libchan.current.section === 'drafts')
+		if (action != 'sort' && libchan.current && libchan.current.section === 'drafts')
 			action = 'new'
 		fd.apnd('action', action)
 		fd.apnd('captcha', $('#captcha').val())
@@ -1770,7 +1831,8 @@ var upForm = {
 		'db-error': 'Ошибка при записи в БД',
 		'not-admin': 'Непохоже, что вы администратор',
 		'wrong-value': 'Неверное значение',
-		'chan-does-not-exist': 'Запись отсутствует в БД'
+		'chan-does-not-exist': 'Запись отсутствует в БД',
+		'data-corrupted': 'Данные повреждены'
 	},
 	actorFieldMap: {
 		ball: ['ball', 'catbg', 'offset'],
@@ -1854,6 +1916,9 @@ var upForm = {
 			if (res.action === 'delete-success') {
 				library.deleteChan(this.candidate.id)
 				libchan.setMode('new', 'draft')
+			}
+			if (res.action === 'sort-success') {
+				library.rebuild()
 			}
 			this.toggle()
 		}
