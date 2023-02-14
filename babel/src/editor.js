@@ -605,6 +605,11 @@ var tree = {
 					return
 				}
 			}
+			else if (typeof cats != 'object') {
+				this.showErrors('bad-json')
+				$('#categories').html('')
+				return
+			}
 			if (cats.length && this.isFlat(cats)) 
 				cats = [{name: '', boards: cats}]
 			cats.forEach(cat => {
@@ -612,11 +617,8 @@ var tree = {
 			})
 		}
 		$('#categories').html(htm)
-		
 		document.querySelectorAll('.tree-cat ul').forEach(this.makeBoardsSortable.bind(this));
-
 		$('#tree-json').val(JSON.stringify(this.deconstruct(), null, '\t'))
-
 		return this.validateUI()
 	},
 	isFlat: cats => cats[0].hasOwnProperty('dir'),
@@ -1241,6 +1243,7 @@ var library = {
 var libchan = {
 	load: function(chan) {
 		upForm.toggle()
+		this.rinse()
 
 		this.current = chan
 
@@ -1306,7 +1309,6 @@ var libchan = {
 		$('#included').prop('checked', !!chan.included)
 		$('#offline').prop('checked', !!chan.offline)
 
-		this.rinse()
 	},
 	_schema: {
 		integrity: {
