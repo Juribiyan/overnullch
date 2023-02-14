@@ -398,7 +398,7 @@ function new_chan($input) {
   save_file($input);
   $ins = $tc_db->Execute('INSERT INTO `'.DB.'` ('.implode(', ', $keys).') VALUES ('.implode(', ', $qms).')', $values);
   if ($ins)
-    return $tc_db->Execute('UDPATE `'.DB.'` SET `order`=`_id` WHERE `id`= ?', array($input['id']));
+    return $tc_db->Execute('UPDATE `'.DB.'` SET `order`=`_id` WHERE `id`= ?', array($input['id']));
 }
 function edit_chan($input) {
   global $tc_db;
