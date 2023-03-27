@@ -234,7 +234,7 @@ function check_validity($input, $f) {
       if ($pp == 'colors' && $output[$pp] == null)
         break;
       if (!is_array($output[$pp]) || count($output[$pp]) != 2)
-        $errs []= array(field => $pp, msg => 'invalid');
+        $errs []= array("field" => $pp, "msg" => 'invalid');
       else {
         if ($pp != 'offset') {
           $ok = true;
@@ -265,7 +265,7 @@ function check_validity($input, $f) {
       if (strtolower($input[$jp]) !== 'null') {
         $json = json_decode($input[$jp]);
         if ($json === null)
-          $errs []= array(field => $jp, msg => 'invalid');
+          $errs []= array("field" => $jp, "msg" => 'invalid');
         else
           $output[$jp] = $input[$jp];
       }
@@ -275,16 +275,16 @@ function check_validity($input, $f) {
   }
   if (isset($input['wiki'])) {
     if (strlen($input['wiki']) > 100)
-      $errs []= array(field => "wiki", msg => 'too-long');
+      $errs []= array("field" => "wiki", "msg" => 'too-long');
     if (strlen($input['wiki'])!=0 && strlen($input['wiki']) < 4)
-      $errs []= array(field => "wiki", msg => 'too-short');
+      $errs []= array("field" => "wiki", "msg" => 'too-short');
     $output['wiki'] = $input['wiki'];
   }
 
   if (isset($input['userboards'])) {
     if (isset($input['userboards_system'])) {
       if (!in_array($input['userboards_system'], array('instant', '0chan', 'meguca', 'lynxchan', 'vichan', '4chan', 'sosach', 'jschan')))
-        $errs []= array(field => "userboards_system", msg => 'invalid');
+        $errs []= array("field" => "userboards_system", "msg" => 'invalid');
       $output['userboards_system'] = $input['userboards_system'];
     }
     else {
@@ -294,7 +294,7 @@ function check_validity($input, $f) {
 
   if (isset($input['userboards_catname'])) {
     if (strlen($input['userboards_catname']) > 50)
-      $errs []= array(field => "userboards_catname", msg => 'too-long');
+      $errs []= array("field" => "userboards_catname", "msg" => 'too-long');
     $output['userboards_catname'] = $input['userboards_catname'];
   }
 
@@ -302,19 +302,19 @@ function check_validity($input, $f) {
   foreach($opty as &$xp) {
     if (isset($input[$xp])) {
       if (strlen($input[$xp]) > 20)
-        $errs []= array(field => $xp, msg => 'too-long');
+        $errs []= array("field" => $xp, "msg" => 'too-long');
       $output[$xp] = $input[$xp];
     }
   }
   if (isset($f['ball'])) {
     $ball = $f['ball'];
     if ($ball['size'] > 100000)
-      $errs []= array(field => 'ball', msg => 'file-too-big');
+      $errs []= array("field" => 'ball', "msg" => 'file-too-big');
     list($width, $height, $type) = getimagesize($ball['tmp_name']);
     if ($type != IMAGETYPE_PNG)
-      $errs []= array(field => 'ball', msg => 'image-not-png');
+      $errs []= array("field" => 'ball', "msg" => 'image-not-png');
     if ($width > 200 || $height > 200)
-      $errs []= array(field => 'ball', msg => 'image-too-large');
+      $errs []= array("field" => 'ball', "msg" => 'image-too-large');
     $output['ball'] = $ball;
   }
   if (isset($input['advanced_less'])) {
@@ -327,10 +327,10 @@ function check_validity($input, $f) {
   foreach($admy as &$ap) {
     if (isset($input[$ap])) {
       if (!$is_admin) {
-        $errs []= array(field => 'admy', msg => 'not-admin');
+        $errs []= array("field" => 'admy', "msg" => 'not-admin');
       }
       if (!in_array($input[$ap], array(0, 1))) {
-        $errs []= array(field => 'admy', msg => 'wrong-value');
+        $errs []= array("field" => 'admy', "msg" => 'wrong-value');
       }
       $output[$ap] = $input[$ap];
     }
@@ -345,7 +345,7 @@ function check_integrity($input, $act) {
   $absolutely_required = array('id', 'password');
   foreach($absolutely_required as &$arf) {
     if (!isset($input[$arf]))
-      $errs []= array(field => $arf, msg => 'missing');
+      $errs []= array("field" => $arf, "msg" => 'missing');
   }
   $required = array('name', 'url', 'boards', 'ball', 'offset', 'catbg');
   $optional = array('userboards', 'prefix', 'postfix', 'wiki', 'radio', 'colors', 'advanced_less', 'default', 'included', 'offline', 'userboards_catname', 'userboards_system');
@@ -446,11 +446,11 @@ function save_file($input) {
     }
     $upload_succ = move_uploaded_file($input['ball']['tmp_name'], $filename);
     if (!$upload_succ) {
-      retreat(array(field => 'ball', msg => 'upload-error'));
+      retreat(array("field" => 'ball', "msg" => 'upload-error'));
     }
   }
   else {
-    retreat(array(field => 'ball', msg => 'upload-error'));
+    retreat(array("field" => 'ball', "msg" => 'upload-error'));
   }
 }
 
